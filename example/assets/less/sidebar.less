@@ -1,0 +1,92 @@
+.el-menu--vertical{
+  .el-menu{
+    background: @menuColor;
+  }
+  .el-menu-item:focus, .el-menu-item:hover{
+    background: @buttonColor;
+  }
+}
+.app-wrapper{
+  .el-menu--collapse>.sidebarContent>.el-menu-item span, .el-menu--collapse>.sidebarContent>.el-submenu>.el-submenu__title span{
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    visibility: hidden;
+    display: inline-block;
+  }
+  .el-menu--collapse>.sidebarContent>.el-menu-item .el-submenu__icon-arrow, .el-menu--collapse>.sidebarContent>.el-submenu>.el-submenu__title .el-submenu__icon-arrow{
+    display: none;
+  }
+  .sidebar-container{
+    float: left;
+    width: 225px;
+    height: 100vh;
+    background: @menuColor;
+    transition: width 300ms;
+    &.collapse{
+      width: 64px;
+    }
+    h1{
+      padding-left: 20px;
+      height: 55px;
+      line-height: 55px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: normal;
+      overflow: hidden;
+      img{
+        margin-right: 8px;
+        width: 28px;
+        height: 28px;
+        vertical-align: middle;
+      }
+    }
+    .el-scrollbar{
+      height: calc(100% - 55px);
+      .el-scrollbar__wrap{
+        overflow: visible;
+        overflow-y: scroll;
+      }
+      .el-scrollbar__view{
+        height: 100%;
+        .el-menu{
+          min-height: 100%;
+          border-right: none;
+          background: transparent;
+          .el-submenu__title{
+            height: 50px;
+            line-height: 50px;
+            opacity: .5;
+            i{
+              color: #fff;
+              font-size: 12px;
+            }
+            &:hover{
+              background: @buttonColor;
+              opacity: 1;
+            }
+          }
+          .el-submenu{
+            &.is-active.el-submenu__title{
+              opacity: 1;
+            }
+          }
+          .el-menu-item{
+            height: 50px;
+            line-height: 50px;
+            font-size: 14px;
+            opacity: .5;
+            &.is-active{
+              background: @buttonColor;
+              opacity: 1;
+            }
+            &:focus, &:hover{
+              background: @buttonColor;
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
