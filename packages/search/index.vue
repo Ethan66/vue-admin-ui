@@ -34,56 +34,6 @@
               @popoverHide="popoverHide"
             />
           </el-form-item>
-          <!-- <el-form-item :label="item.label" :key="i" v-if="item.type!=='date'">
-            <el-input
-              clearable
-              v-if="item.type === 'input' || !item.type"
-              v-model="searchValues[item.key]"
-              :placeholder="item.placeholder || ''"
-              :disabled="item.disabled || false"
-              @change="handleChange(item.changeFn)"
-            ></el-input>
-            <el-select
-              clearable
-              filterable
-              v-if="item.type === 'select'"
-              v-model="searchValues[item.key]"
-              :placeholder="item.placeholder || ''"
-              :disabled="item.disabled || false"
-              @change="handleChange(item.changeFn)"
-            ><el-option
-                v-for="(pro, index) in item.options" :key="index" :label="pro.label" :value="pro.value"></el-option>
-            </el-select>
-            <tree-select
-              v-if="item.type === 'selectTree'"
-              ref="selectTree"
-              clearable
-              collapseTags
-              :checkStrictly="item.checkStrictly"
-              :searchItemKey="item.key"
-              :multiple="item.treeMultiple"
-              width="100%"
-              :height="item.treeHeight || 400"
-              :data="item.data"
-              :defaultProps="item.defaultProps"
-              nodeKey="id" :defaultCheckedKeys="item.treeDefaultCheckedValue"
-              @popoverHide="popoverHide"
-            />
-          </el-form-item> -->
-         <!--  <el-form-item v-if="item.type === 'date'" :label="item.label" :key="i">
-            <template v-if="item.key.length === 2">
-              <el-col>
-                <el-date-picker
-                  type="daterange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  format="yyyy-MM-dd"
-                  v-model="dateObj[item.key.join()]"
-                  style="width: 100%;"></el-date-picker>
-              </el-col>
-            </template>
-          </el-form-item> -->
         </template>
       <el-form-item class="noMarginBottom">
         <el-button type="primary" icon="el-icon-search" @click.native.prevent="handleSearch()">查询</el-button>
@@ -192,33 +142,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less">
-  .searchContent{
-    padding: 20px 15px 25px;
-    background: #fff;
-    h3{
-      font-size: 16px;
-      margin-bottom: 25px;
-      span{
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: normal;
-        margin-left: 10px;
-      }
-    }
-    .noMarginBottom{
-      display: flex;
-      margin-bottom: 0;
-      margin-top: 10px;
-      .el-button--export{
-        background: #19A2F9;
-        color: #fff;
-      }
-      .el-delete{
-        background:#F7BF5E;
-        border-color:#F7BF5E;
-      }
-    }
-  }
-</style>

@@ -45,44 +45,6 @@
           name="btn"
           :$index="i"
         ></slot>
-        <!-- <el-table-column
-          v-if="item.type==='selection' && item.show !== false"
-          :key="`selection${i}`"
-          :width="item.width"
-          :selectable="handleSelect"
-          align="center"
-          type="selection"
-          :fixed="item.fixed"
-        /> -->
-        <!-- <el-table-column
-          v-if="['cell', 'input', 'select'].includes(item.type)"
-          :key="`content${i}`"
-          :min-width="item.width"
-          :sortable="item.sortStatus || false"
-          :show-overflow-tooltip="item.overflow || true"
-          :label="item.label"
-          :align="item.align || 'left'"
-          :fixed="item.fixed"
-        >
-        <template slot-scope="scope">
-          <inline-edit
-            v-if="scope.row.editStatus && ['input', 'select'].includes(item.type)"
-            :item="item"
-            :type="item.type"
-            :row="scope.row"
-            :prop="item.prop"
-          />
-          <span
-            v-else
-            :class="[handleSetStatusClsName(item.clsName || '', scope.row[item.prop]), { canClick: item.clickFn !== undefined }]"
-            @click="handleCellClick(item.clickFn, scope.row)"
-          >
-            <i :class="handleSetStatusClsName(item.clsName || '', scope.row[item.prop], 'i')"></i>
-            <template v-if="item.formatterFn">{{ item.formatterFn(scope.row[item.prop]) }}</template>
-            <template v-else>{{ scope.row[item.prop] }}</template>
-          </span>
-        </template>
-        </el-table-column> -->
         <cell-radio
           v-if="item.type==='radio'"
           :key="`radio${i}`"
@@ -90,32 +52,6 @@
           :prop="item.prop"
           :parent="parent"
         />
-       <!--  <cell-tree
-          v-if="item.type==='tree'"
-          :key="`tree${i}`"
-          :item="item"
-          :tableData="tableData"
-          :treeInitLevel="treeInitLevel"
-          :treeExpandIds="treeExpandIds"
-          :treeParentId="treeParentId"
-          :getTreeDataByPost="getTreeDataByPost"
-          @handleSaveOpenIds="handleSaveOpenIds"
-          @handAddTableData="handAddTableData"
-          @clickGetTreeData="handleClickGetTreeData"
-        >
-        </cell-tree> -->
-       <!--  <table-btn
-          v-if="item.type==='btn' && item.show !== false"
-          :key="`btn${i}`"
-          :item="item"
-          :i="i"
-          :tableBtn="tableBtn"
-          :isInlineEdit="isInlineEdit"
-          :inlineLabelToValue="inlineLabelToValue"
-          :tableItem="tableItem"
-          :rowOrignData="rowOrignData"
-          @handleInlineEditTableData="handleInlineEditTableData"
-        /> -->
         <el-table-column
           v-if="item.type==='setting'"
           :key="`selection${i}`"
@@ -145,23 +81,11 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <!-- 自定义表头 -->
-    <!-- <user-define-head-list
-      v-if="showTableHeadSetting"
-      :totalSetHeadList="totalSetHeadList"
-      :choosedHeadList="choosedHeadList"
-      @handleSendHead="handleSendHead"
-    /> -->
   </div>
 </template>
 
 <script>
-// import userDefineHeadList from './components/userDefineHeadList' // 自定义表头设置模块
-// import tableBtn from './components/tableBtn' // 按钮模块
-// import inlineEdit from './components/inlineEdit' // 行内编辑
-// import cellTree from './components/cellTree' // 表格树
 import cellRadio from './components/cellRadio' // 表格单选框
-// import statusClsName from './config/defaultStatusClsName'
 import { getTableHeight, getCellClass, setHeadIcon, setInitTableStyle } from './config/method'
 export default {
   name: 'tableModule',
@@ -181,25 +105,6 @@ export default {
     maxHeight: String,
     headerCellClassName: Function || String,
     cellClassName: Function || String,
-    /* // 全部的自定义表头
-    totalSetHeadList: Array, */
-    /* // 已勾选的自定义表头
-    choosedHeadList: Array, */
-    /* // 表格树最开始的等级
-    treeInitLevel: Number,
-    // 表格树打开是否需要请求接口
-    getTreeDataByPost: Boolean,
-    // 表格树父亲id名字
-    treeParentId: {
-      type: String,
-      default: 'parentId'
-    },
-    // 保存表格树打开的ids
-    treeExpandIds: Array, */
-    // 是否为行内编辑
-    // isInlineEdit: Boolean,
-    // 选择框中文转value
-    // inlineLabelToValue: Object,
     // 默认总高度为菜单高度
     totalHeightClsName: {
       type: String,
@@ -207,8 +112,6 @@ export default {
     },
     // 需要减掉的高度
     reduceHeightClsNameList: Array,
-    /* // 按钮
-    btns: Array, */
     // 分页
     tablePages: {
       type: Object,
@@ -221,13 +124,10 @@ export default {
       type: String,
       default: 'total, sizes, prev, pager, next, jumper'
     },
-    /*  // 判断哪几行需要勾选
-    selectableFn: Function */
   },
   data () {
     return {
       tableHeight: 10000,
-      // rowOrignData: [], // 行内编辑编辑时保存的原始数据
       parent: ''
     }
   },
@@ -239,16 +139,6 @@ export default {
     tableItem () {
       return this.items
     },
-    /* tableBtn () {
-      return this.btns
-    }, */
-    /* // 是否展示自定义表头
-    showTableHeadSetting () {
-      if (this.tableItem.findIndex(item => item.type === 'setting') > -1) {
-        return true
-      }
-      return false
-    }, */
     tableLoading () {
       let parent = this.$parent
       let i = 0
@@ -270,7 +160,6 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      // this.showTableHeadSetting && setHeadIcon()
       if (this.maxHeight) {
         this.tableHeight = this.maxHeight
         return false
@@ -286,7 +175,6 @@ export default {
         this.tableHeight = this.maxHeight
         return false
       }
-      // this.showTableHeadSetting && setHeadIcon()
       this.handleSetTableHeight()
     }
   },
@@ -295,21 +183,6 @@ export default {
     handleSetTableHeight () {
       this.tableHeight = getTableHeight(this.totalHeightClsName, this.reduceHeightClsNameList)
     },
-    /* // 设置状态clsName
-    handleSetStatusClsName (type, value, i) {
-      if (type) {
-        if (i && statusClsName[type]) {
-          return ['status-i', type, statusClsName[type][value]]
-        } else if (statusClsName[type]) {
-          return ['status', type, value]
-        }
-        return [type, value]
-      }
-    }, */
-    /* // 发送自定义表头
-    handleSendHead (val) {
-      this.$emit('handleSendHead', val)
-    }, */
     // 自定义设置列样式
     handleSetCellClass (row) {
       return getCellClass(row, this.tableItem, this.headerCellClassName)
@@ -318,38 +191,6 @@ export default {
     handleSetHeaderCellClass (row) {
       return getCellClass(row, this.tableItem, this.cellClassName)
     },
-    /* // 判断此行是否要勾选
-    handleSelect (row, index) {
-      if (this.selectableFn) {
-        if (this.selectableFn(row, index)) {
-          return true
-        } else {
-          return false
-        }
-      } else {
-        return true
-      }
-    }, */
-    /* // 行内编辑点击编辑按钮时修改tableData
-    handleInlineEditTableData (index, row, delete1) {
-      this.$set(this.tableData, index, row)
-      if (delete1 === 'delete') {
-        this.tableData.splice(index, 1)
-        this.$set(this, 'tableData', this.tableData)
-      }
-    }, */
-    /* // 树表格点击请求子数据
-    handleClickGetTreeData (row, index) {
-      this.$emit('clickGetTreeData', row, index)
-    },
-    // 树表格修改tableData
-    handAddTableData (tableData) {
-      this.$emit('update:data', tableData)
-    },
-    // 表格树保存已打开的id
-    handleSaveOpenIds (idList) {
-      this.$emit('update:treeExpandIds', idList)
-    }, */
     // 事件：每页几条
     handleSizeChange (val) {
       console.log(`每页 ${val} 条`)
@@ -360,10 +201,7 @@ export default {
     handleCurrentChange (val) {
       this.$emit('table-jump', val)
       this.tablePages.current = val
-    },
-    /*  handleCellClick (fn, row) {
-      this.parent[fn] && this.parent[fn](row)
-    } */
+    }
   }
 }
 </script>
