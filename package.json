@@ -1,8 +1,9 @@
 {
-  "name": "vue-admin-ui",
-  "version": "1.0.0",
+  "name": "vue-admin-ui-lib",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
+  "style": "lib/style/index.css",
   "files": [
     "lib",
     "packages"
