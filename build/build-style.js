@@ -2,9 +2,9 @@ const fs = require('fs-extra')
 const path = require('path')
 const less = require('less')
 const cssmin = require('cssmin') // 压缩所有样式打包出来的index.css文件
-const esStyleDir = path.join(__dirname, '../es/lnzi-style') // 获取es样式绝对路径
-const libStyleDir = path.join(__dirname, '../lib/lnzi-style') // 获取lib样式绝对路径
-const pkgStyleDir = path.join(__dirname, '../packages/lnzi-style') // 获取packages样式绝对路径
+const esStyleDir = path.join(__dirname, '../es/style') // 获取es样式绝对路径
+const libStyleDir = path.join(__dirname, '../lib/style') // 获取lib样式绝对路径
+const pkgStyleDir = path.join(__dirname, '../packages/style') // 获取packages样式绝对路径
 const components = getComponents(path.join(__dirname, '../packages')) // 获取组件名
 const esComponentDir = path.join(__dirname, '../es')
 const libComponentDir = path.join(__dirname, '../lib')
@@ -64,6 +64,6 @@ function joinComponentStyle (dir) {
 
 function getComponents (dir) {
   const dirs = fs.readdirSync(dir)
-  const excludes = ['index.js', 'lnzi-style', 'mixins', 'utils']
+  const excludes = ['index.js', 'style', 'mixins', 'utils']
   return dirs.filter(dirName => excludes.indexOf(dirName) === -1)
 }
