@@ -17,7 +17,7 @@ fs.emptyDirSync(libDir) // 清空lib文件夹，没有文件夹就创建
 
 fs.copySync(pkgDir, esDir) // 复制pkg文件到es文件下
 
-const whiteList = /(demo|test|lnzi-style|\.md)$/
+const whiteList = /(demo|test|style|\.md)$/
 
 compile(esDir) // 编译文件
 
