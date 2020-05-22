@@ -10,14 +10,18 @@ import systemObj from '@/config/system'
 import { authBtn } from '@/config/methods'
 import { tableBtn, dialogBtn } from '@/config/defaultBtnData'
 
+// const handleBasicObj = window.handleBasicObj.default
+
 import {
   searchModule,
-  tableModule
+  tableModule,
+  dialogModule
 } from '$pkg/index'
 
 Vue.use(ElementUI)
   .use(searchModule)
   .use(tableModule)
+  .use(dialogModule)
 
 Vue.prototype.$systemObj = systemObj
 Vue.prototype.$authBtn = authBtn

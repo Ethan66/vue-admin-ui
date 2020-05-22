@@ -30,15 +30,15 @@
         />
       </template>
     </table-module>
-     <!-- <dialog-module
+     <dialog-module
       ref="dialog"
-      :dialog-title="dialogTitle"
-      :showDialogForm.sync="showDialogForm"
-      :edit-data="editData"
-      :dialog-item="dialogItem"
-      :dialog-btn="dialogBtn"
+      :title="dialogTitle"
+      :showDialog.sync="showDialogForm"
+      :data="editData"
+      :items="dialogItem"
+      :btns="dialogBtn"
       :rules="rules"
-    /> -->
+    />
   </div>
 </template>
 
@@ -65,11 +65,6 @@ export default {
       if (res.code === '000000') {
         this.dialogItem[2].options = res.data.list.map(item => ({ label: item.roleName, value: item.roleId }))
       }
-    })
-  },
-  mounted () {
-    setTimeout(() => {
-      console.log(22, this.searchItem[0])
     })
   },
   methods: {

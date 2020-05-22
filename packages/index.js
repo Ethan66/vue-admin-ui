@@ -1,12 +1,12 @@
 import searchModule from './search'
 import tableModule from './table'
-// import dialogModule from './dialog-module'
+import dialogModule from './dialog'
 // import dialogDetail from './dialog-module/detail'
 
 const components = [
   searchModule,
   tableModule,
-  // dialogModule,
+  dialogModule,
   // dialogDetail
 ]
 
@@ -26,6 +26,6 @@ export {
   adminModule,
   searchModule,
   tableModule,
-  // dialogModule,
+  dialogModule,
   // dialogDetail
 }

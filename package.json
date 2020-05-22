@@ -58,7 +58,7 @@
     "nprogress": "^0.2.0",
     "store": "^2.0.12",
     "vue": "^2.5.11",
-    "vue-admin-methods": "^1.0.19",
+    "vue-admin-methods": "^1.0.20",
     "vue-router": "^3.1.6",
     "vuex": "^3.4.0"
   }

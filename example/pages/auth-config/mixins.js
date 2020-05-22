@@ -35,7 +35,7 @@ export const user = {
           account: { label: '账号' },
           name: { label: '用户名' },
           roleId: { label: '角色', type: 'select', options: [] },
-          password: { label: '密码', type: 'password' },
+          password: { label: '密码', showPassword: true },
           status: { label: '状态', type: 'radio', options: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] }
         }
       },
