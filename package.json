@@ -1,6 +1,6 @@
 {
   "name": "vue-admin-ui-lib",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "lib/index.js",
   "style": "lib/style/index.css",
@@ -13,7 +13,7 @@
     "build:components": "node build/build-components.js --color",
     "build:style": "node build/build-style.js",
     "build:lib": "node build/build-lib.js",
-    "pub": "npm run build:lib && npm publish"
+    "pub": "npm run build:lib && npm publish --registry=https://registry.npmjs.org/"
   },
   "keywords": [],
   "author": "",
