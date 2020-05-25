@@ -1,21 +1,9 @@
 .dialogModule {
-  .el-radio__input.is-checked+.el-radio__label{
-    color: #333;
-  }
-  .el-radio__input.is-checked .el-radio__inner{
-    background: #4162DB;
-    border-color: #4162DB;
-  }
-  .el-button--default{
-    color: #888;
-    border: 1px solid #e8e8e8;
-  }
   .el-radio+.el-radio{
     margin-left: 12px;
   }
   .el-radio__label{
     padding-left: 5px;
-    color: #333;
   }
    &.doubleColumn{
     .el-dialog{
@@ -24,18 +12,10 @@
     }
   }
   .el-dialog{
-    max-width: 520px;
+    max-width: 600px;
     border-radius: 4px;
-    .el-dialog__header{
-      padding: 15px 15px 12px;
-      border-bottom: 1px solid #e8e8e8;
-      .el-dialog__title{
-        font-size: 16px;
-        font-weight: bold;
-      }
-    }
     .el-dialog__body{
-      padding: 34px 70px 0 50px;
+      padding-bottom: 10px;
       .el-form{
         width: 100%;
         .el-form-item{
@@ -98,37 +78,15 @@
       .el-form-item__label {
         line-height: 30px;
         font-weight: normal;
-        color: #333;
       }
       .el-form-item__content {
-        margin-left: 100px;
         line-height: 30px;
         .el-input__inner{
-          height: 30px;
-          border-color: #e8e8e8;
-          line-height: 30px;
-        }
-        .el-input__icon{
-          line-height: 30px;
+          height: 36px;
+          line-height: 36px;
         }
       }
     }
-     .el-dialog__footer{
-      padding: 20px;
-      border-top: 1px solid #e8e8e8;
-      .el-button{
-        width: 60px;
-        height: 30px;
-        padding: 0;
-        border-radius: 4px;
-        letter-spacing: 1px;
-        line-height: 30px;
-      }
-    }
-  }
-  .el-radio--small.is-bordered{
-    padding: 11px 15px 0 10px;
-    height: 40px;
   }
   .el-button{
     padding: 10px 20px;
@@ -148,19 +106,5 @@
   }
   .el-select {
     width: 100%;
-  }
-  .longText {
-    .el-form-item__content{
-      margin-left: 140px;
-    }
-    label {
-      width: 140px;
-    }
-  }
-  .textTip{
-    margin-top: -10px;
-    margin-bottom: 25px;
-    color: #B2B2B2;
-    font-size: 12px;
   }
 }

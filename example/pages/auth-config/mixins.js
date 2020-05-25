@@ -17,6 +17,9 @@ export const user = {
       items: {
         search: {
           account: { label: '账号', name: '你好', clearable: true, change: this.handleChange },
+          account1: { label: '账号', name: '你好', clearable: true, change: this.handleChange },
+          account2: { label: '账号', name: '你好', clearable: true, change: this.handleChange },
+          account3: { label: '账号', name: '你好', clearable: true, change: this.handleChange },
           name: { label: '用户名' },
           status: { label: '状态', type: 'select', options: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] },
           date: { label: '时间', key: 'str1', type: 'date', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' }

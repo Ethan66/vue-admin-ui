@@ -37,33 +37,3 @@ export const getCellClass = (row, newTableItem, cb) => {
     return result
   }
 }
-
-// 修改筛选图标
-export const setHeadIcon = () => {
-  Array.from(document.querySelectorAll('.tableModule .el-table th.headSetting .cell')).forEach(item => {
-    item.classList.add('el-icon-setting')
-  })
-}
-
-// mounted中设置table样式
-export const setInitTableStyle = () => {
-  let timer = setTimeout(() => {
-    let $totalTable = document.querySelector('.tableModule>.el-table')
-    let bottom = 0
-    if ($totalTable) {
-      if ($totalTable.offsetWidth < document.querySelector('.el-table__header').offsetWidth) {
-        bottom = 7
-      }
-    }
-    Array.from(document.querySelectorAll('.el-table__fixed-right')).forEach(item => {
-      item.style.bottom = bottom + 'px'
-      item.style.right = '6px'
-    })
-    Array.from(document.querySelectorAll('.el-table__fixed')).forEach(item => {
-      item.style.bottom = bottom + 'px'
-    })
-    let tableContent = document.querySelector('.el-table__body-wrapper>table')
-    tableContent.style.width = tableContent.style.width.slice(0, 2) + 9 + 'px'
-    clearTimeout(timer)
-  }, 100)
-}

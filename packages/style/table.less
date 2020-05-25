@@ -14,36 +14,14 @@
       border-color:#E8E8E8;
     }
   }
-  .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell{
-    padding-left: 15px;
-    padding-right: 15px;
-  }
   .el-table--border td, .el-table--border th, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed{
-    border-right-color: transparent;
-  }
-  /* .el-table__fixed-body-wrapper{
     border-right: 1px solid #e8e8e8;
-  } */
-  /* .el-table__row td.headSetting{
-    border-left: 1px solid #e8e8e8;
-  } */
-  .el-table__row .el-table-column--selection {
-    border-right: 1px dashed #e8e8e8;
   }
-  .el-table__fixed-right td.headSetting{
-    border-left: 1px solid #e8e8e8;
-  }
- /*  .el-table__header th.starting{
-    border-right: 1px solid #e8e8e8;
-  } */
-  .el-table__row td.starting{
-    border-right: 1px solid #e8e8e8;
-    &.is-hidden{
-      border-right-width: 0;
-    }
-  }
+  .el-table td, .el-table th.is-leaf {
+    border-bottom: 1px solid #e8e8e8;
+}
   .el-table{
-    color: #333;
+    color: #606266;
     .el-table__body-wrapper::-webkit-scrollbar {/*滚动条整体样式*/
           width: 6px;     /*高宽分别对应横竖滚动条的尺寸*/
           height: 8px;
@@ -62,40 +40,11 @@
       border-color: @buttonColor;
     }
     th{
-      height: 50px;
-      padding: 0;
-      background: #F2F4F5;
-      border-right: #F2F4F5;
       >.cell{
-        color: #333;
+        font-weight: bold;
+        color: #999;
       }
     }
-    td{
-      height: 50px;
-      padding: 0;
-    }
-     .el-icon{
-      width: 16px;
-      height: 16px;
-      border-radius: 2px;
-      line-height: 16px;
-      text-align: center;
-      font-size: 12px;
-      color: #fff;
-      & + .el-icon{
-        margin-left: 12px;
-      }
-      &:hover{
-        cursor: pointer;
-        opacity: .7;
-      }
-    }
-  }
-  .el-table-column--selection .el-checkbox{
-    margin: 0;
-  }
-  .el-table__fixed-right-patch{
-    background-color: #F2F4F5;
   }
   .right{
     height: 50px;

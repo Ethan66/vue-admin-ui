@@ -86,7 +86,7 @@
 
 <script>
 import cellRadio from './components/cellRadio' // 表格单选框
-import { getTableHeight, getCellClass, setHeadIcon, setInitTableStyle } from './config/method'
+import { getTableHeight, getCellClass } from './config/method'
 export default {
   name: 'tableModule',
   components: { cellRadio },
@@ -151,13 +151,6 @@ export default {
       return parent.tableLoading
     }
   },
-  watch: {
-    tableLoading (val) {
-      if (!val) {
-        setInitTableStyle()
-      }
-    }
-  },
   mounted () {
     this.$nextTick(() => {
       if (this.maxHeight) {
@@ -170,7 +163,6 @@ export default {
       }, 100)
     })
     window.onresize = () => {
-      setInitTableStyle()
       if (this.maxHeight) {
         this.tableHeight = this.maxHeight
         return false
