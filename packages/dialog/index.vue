@@ -3,32 +3,41 @@
     <el-form :model="data" :rules="rules" ref="form">
       <el-row v-for="(item, i) in dialogItem" :key="i" :class="handleClass(item.span, item.type)">
         <el-col :class="item.clsName || ''">
-          <el-form-item
-            v-if="['text', 'number', 'radio', 'textarea', 'select', ...dateTypeList].includes(item.type) && item.show"
-            :class="['label' + chineseTybe, { radio: ['radio'].includes(item.type) }]"
+           <el-form-item
+            v-if="item.$attr.slot"
+            :class="['label' + chineseTybe]"
             :label="item.label"
             :prop="item.key"
           >
-            <basic-module
-              :dateTypeList="dateTypeList"
-              :config="item"
-              :result="data"
-              :all-read="allRead"
-            >
-            </basic-module>
+            <slot :name="item.$attr.slot"></slot>
           </el-form-item>
-          <el-form-item
-            v-if="['switch'].includes(item.type) && item.show"
-            :class="['label' + chineseTybe, { radio: ['radio'].includes(item.type) }]"
-            :label="item.label"
-            :prop="item.key"
-          >
-             <my-switch
-              v-model="data[item.key]"
+          <template v-else>
+            <el-form-item
+              v-if="['text', 'number', 'radio', 'textarea', 'select', ...dateTypeList].includes(item.type) && item.show"
+              :class="['label' + chineseTybe, { radio: ['radio'].includes(item.type) }]"
+              :label="item.label"
+              :prop="item.key"
             >
-            </my-switch>
-          </el-form-item>
-
+              <basic-module
+                :dateTypeList="dateTypeList"
+                :config="item"
+                :result="data"
+                :all-read="allRead"
+              >
+              </basic-module>
+            </el-form-item>
+            <el-form-item
+              v-if="['switch'].includes(item.type) && item.show"
+              :class="['label' + chineseTybe]"
+              :label="item.label"
+              :prop="item.key"
+            >
+              <my-switch
+                v-model="data[item.key]"
+              >
+              </my-switch>
+            </el-form-item>
+          </template>
           <!--  <el-form-item :class="['label' + chineseTybe, { radio: ['radio'].includes(item.type) }]" :label="item.label" :prop="item.key">
             <el-select
                       v-if="['select', 'selectMore'].includes(item.type)"
@@ -94,7 +103,6 @@
               @change="handleClearSelectTree2"
               @popoverHide="popoverHide2"/>
           </el-form-item> -->
-          <p class="textTip" v-if="item.textTip">{{ item.textTip }}</p>
         </el-col>
       </el-row>
     </el-form>
