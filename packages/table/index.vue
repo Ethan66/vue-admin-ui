@@ -38,11 +38,21 @@
             </template>
           </template>
         </el-table-column>
-        <slot
-          v-if="['btn'].includes(item.type) && item.show !== false"
-          name="btn"
-          :$index="i"
-        ></slot>
+        <el-table-column
+          v-if="item.type === 'btn'"
+          :key="`btn${i}`"
+          :width="item.width"
+          :slot="undefined"
+          v-bind="item"
+        >
+          <template slot-scope="scope">
+            <slot
+              name="btn"
+              :row="scope.row"
+              :$index="scope.$index"
+            ></slot>
+          </template>
+        </el-table-column>
         <cell-radio
           v-if="item.type==='radio'"
           :key="`radio${i}`"
@@ -50,15 +60,6 @@
           :prop="item.prop"
           :parent="parent"
         />
-        <el-table-column
-          v-if="item.type==='setting'"
-          :key="`selection${i}`"
-          width="30"
-          align="center"
-          fixed="right"
-          filter-placement="bottom-end"
-        >
-      </el-table-column>
       </template>
     </el-table>
     <!-- 底部统计数据 -->
