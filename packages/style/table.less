@@ -1,27 +1,9 @@
-@buttonColor: #4162DB;
-
 .tableModule{
   flex-grow: 1;
   margin-top: 10px;
   background: #fff;
   padding: 15px 15px 20px;
-  .canClick{
-    cursor: pointer;
-  }
-  .el-table--border{
-    border-color:#E8E8E8;
-    td{
-      border-color:#E8E8E8;
-    }
-  }
-  .el-table--border td, .el-table--border th, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed{
-    border-right: 1px solid #e8e8e8;
-  }
-  .el-table td, .el-table th.is-leaf {
-    border-bottom: 1px solid #e8e8e8;
-}
   .el-table{
-    color: #606266;
     .el-table__body-wrapper::-webkit-scrollbar {/*滚动条整体样式*/
           width: 6px;     /*高宽分别对应横竖滚动条的尺寸*/
           height: 8px;
@@ -34,11 +16,6 @@
           border-radius: 0;
           background: transparent;
       }
-    .el-checkbox__input.is-checked .el-checkbox__inner,
-    .el-checkbox__input.is-indeterminate .el-checkbox__inner{
-      background: @buttonColor;
-      border-color: @buttonColor;
-    }
     th{
       >.cell{
         font-weight: bold;
@@ -54,12 +31,6 @@
       position: absolute;
       right: 15px;
       top: 40%;
-      &.is-background .el-pager li:not(.disabled).active{
-        background: @buttonColor;
-      }
-      &.is-background .el-pager li:not(.disabled).hover{
-        background: @buttonColor;
-      }
       .btn-prev, .btn-next, .el-pager .number{
         border: 1px solid #D9D9D9;
       }

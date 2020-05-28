@@ -6,8 +6,6 @@
       :data="tableData"
       :max-height="tableHeight"
       v-loading="tableLoading"
-      :header-cell-class-name="handleSetHeaderCellClass"
-      :cell-class-name="handleSetCellClass"
       border
       style="width: 100%;"
       class="table"
@@ -86,7 +84,7 @@
 
 <script>
 import cellRadio from './components/cellRadio' // 表格单选框
-import { getTableHeight, getCellClass } from './config/method'
+import { getTableHeight } from './config/method'
 export default {
   name: 'tableModule',
   components: { cellRadio },
@@ -174,14 +172,6 @@ export default {
     // 设置表格高度
     handleSetTableHeight () {
       this.tableHeight = getTableHeight(this.totalHeightClsName, this.reduceHeightClsNameList)
-    },
-    // 自定义设置列样式
-    handleSetCellClass (row) {
-      return getCellClass(row, this.tableItem, this.headerCellClassName)
-    },
-    // 自定义设置列样式
-    handleSetHeaderCellClass (row) {
-      return getCellClass(row, this.tableItem, this.cellClassName)
     },
     // 事件：每页几条
     handleSizeChange (val) {
