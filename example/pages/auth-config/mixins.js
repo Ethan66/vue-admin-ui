@@ -10,9 +10,8 @@ const userMoreList = authMoreBtn([
 export const user = {
   data () {
     return new this.$InitObj({
-      modules: 'All',
       btnConfig: {
-        tableBtn: [{ edit: { code: 'user-edit-user' } }, { more: { list: userMoreList, code: 'user-more' } }]
+        // tableBtn: [{ edit: { code: 'user-edit-user' } }, { more: { list: userMoreList, code: 'user-more' } }]
       },
       items: {
         search: {
@@ -29,10 +28,10 @@ export const user = {
           account: { label: '账号', width: 100 },
           name: { label: '用户名', width: 100 },
           roleName: { label: '角色', width: 100 },
-          status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatterFn: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
+          status: { label: '状态', width: 90, clsName: 'userStatus', formatter: this.formatterStatus },
           loginTime: { label: '最近登录', width: 120 },
           operator: { label: '操作人', width: 100 },
-          btn: { width: 122, slot: 'btn' }
+          btn: { width: 170, slot: 'btn' }
         },
         dialog: {
           account: { label: '账号' },
@@ -67,9 +66,8 @@ const roleMoreList = authMoreBtn([
 export const role = {
   data () {
     return new this.$InitObj({
-      modules: 'All',
       btnConfig: {
-        tableBtn: [{ edit: { code: 'role-edit-role' } }, { more: { list: roleMoreList, code: 'role-more' } }]
+        // tableBtn: [{ edit: { code: 'role-edit-role' } }, { more: { list: roleMoreList, code: 'role-more' } }]
       },
       items: {
         search: {
@@ -80,7 +78,7 @@ export const role = {
           selection: '',
           roleName: { label: '角色名', width: 100 },
           roleId: { label: '角色Id', width: 100 },
-          status: { label: '状态', width: 90, slot: 'status', clsName: 'roleStatus', formatterFn: this.$InitObj.prototype.formmater(['失效', '正常']) },
+          status: { label: '状态', width: 90, slot: 'status', clsName: 'roleStatus' },
           updateDate: { label: '更新时间', width: 100 },
           operator: { label: '操作人', width: 100 },
           btn: { width: 118 }
@@ -103,7 +101,7 @@ export const role = {
 export const roleAuth = {
   data () {
     return new this.$InitObj({
-      modules: ['dialog'],
+      // modules: ['dialog'],
       btnConfig: {},
       items: {
         dialog: {

@@ -7,6 +7,7 @@
     ></search-module>
     <table-module
       ref="table"
+      :loading="tableLoading"
       :data="tableData"
       :items="tableItem"
       @selection-change="handleSelectChange"
@@ -22,13 +23,21 @@
         ></table-status>
       </template>
       <template slot="btn" slot-scope="scope">
+        <div>
+          <el-button type="text" size="mini" @click="handleEditData(scope.row)">编辑</el-button>
+          <el-button type="text" size="mini" v-if="scope.row.status === 1" @click="handleChangeStatus(scope.row)">禁止登录</el-button>
+          <el-button type="text" size="mini" v-if="scope.row.status === 0" @click="handleChangeStatus(scope.row)">允许登录</el-button>
+          <el-button type="text" size="mini" @click="handleDeleteData(scope.row)">删除</el-button>
+        </div>
+      </template>
+      <!-- <template slot="btn" slot-scope="scope">
         <table-btn
           :item="tableItem[7]"
           :i="scope.$index"
           :tableBtn="tableBtn"
           :tableItem="tableItem"
         />
-      </template>
+      </template> -->
     </table-module>
      <dialog-module
       ref="dialog"
@@ -73,6 +82,9 @@ export default {
     },
     handleChange () {
       console.log(11, this.searchItem)
+    },
+    formatterStatus (row) {
+      return row.userStatus === 1 ? '允许登录' : '禁止登录'
     },
     // 点击新增按钮
     handleAdd () {

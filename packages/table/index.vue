@@ -5,7 +5,7 @@
     <el-table
       :data="tableData"
       :max-height="tableHeight"
-      v-loading="tableLoading"
+      v-loading="loading"
       border
       style="width: 100%;"
       class="table"
@@ -19,25 +19,31 @@
           align="center"
           v-bind="item"
         />
-        <el-table-column
-          v-if="['cell'].includes(item.type)"
-          :key="`content${i}`"
-          :min-width="item.width"
-          :width="undefined"
-          :slot="undefined"
-          v-bind="item"
-        >
-          <template slot-scope="scope">
-            <slot
-              :name="item.slot"
-              :row="scope.row"
-              :$index="scope.$index"
-            ></slot>
-            <template v-if="!item.slot">
-              {{ scope.row[item.prop] }}
+        <template v-if="item.type === 'cell'">
+          <el-table-column
+            v-if="!item.slot"
+            :key="`content${i}`"
+            :min-width="item.width"
+            :width="undefined"
+            v-bind="item"
+          />
+          <el-table-column
+            v-else
+            :key="`content${i}`"
+            :min-width="item.width"
+            :width="undefined"
+            :slot="undefined"
+            v-bind="item"
+          >
+            <template slot-scope="scope">
+              <slot
+                :name="item.slot"
+                :row="scope.row"
+                :$index="scope.$index"
+              ></slot>
             </template>
-          </template>
-        </el-table-column>
+          </el-table-column>
+        </template>
         <el-table-column
           v-if="item.type === 'btn'"
           :key="`btn${i}`"
@@ -53,13 +59,6 @@
             ></slot>
           </template>
         </el-table-column>
-        <cell-radio
-          v-if="item.type==='radio'"
-          :key="`radio${i}`"
-          :item="item"
-          :prop="item.prop"
-          :parent="parent"
-        />
       </template>
     </el-table>
     <!-- 底部统计数据 -->
@@ -84,12 +83,11 @@
 </template>
 
 <script>
-import cellRadio from './components/cellRadio' // 表格单选框
 import { getTableHeight } from './config/method'
 export default {
   name: 'tableModule',
-  components: { cellRadio },
   props: {
+    loading: Boolean,
     // 已经处理过的表格数据
     data: {
       type: Array,
@@ -138,17 +136,6 @@ export default {
     tableItem () {
       return this.items
     },
-    tableLoading () {
-      let parent = this.$parent
-      let i = 0
-      while (!typeof parent.tableLoading === 'undefined') {
-        parent = parent.$parent
-        i++
-        if (i === 5) break
-      }
-      this.parent = parent
-      return parent.tableLoading
-    }
   },
   mounted () {
     this.$nextTick(() => {

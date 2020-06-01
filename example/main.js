@@ -25,7 +25,7 @@ Vue.use(ElementUI)
 
 Vue.prototype.$systemObj = systemObj
 Vue.prototype.$authBtn = authBtn
-Vue.prototype.$InitObj = handleBasicObj({ defaultTableBtn: tableBtn, defaultDialogBtn: dialogBtn })
+Vue.prototype.$InitObj = handleBasicObj({ defaultDialogBtn: dialogBtn })
 
 let vm = new Vue({
   el: '#app',

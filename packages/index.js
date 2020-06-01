@@ -1,3 +1,4 @@
+import handleBasicObj from 'vue-admin-methods'
 import searchModule from './search'
 import tableModule from './table'
 import dialogModule from './dialog'
@@ -23,6 +24,7 @@ const adminModule = (Vue) => {
 }
 
 export {
+  handleBasicObj,
   adminModule,
   searchModule,
   tableModule,
