@@ -10,9 +10,9 @@ const userMoreList = authMoreBtn([
 export const user = {
   data () {
     return new this.$InitObj({
-      btnConfig: {
-        // tableBtn: [{ edit: { code: 'user-edit-user' } }, { more: { list: userMoreList, code: 'user-more' } }]
-      },
+      // btnConfig: {
+      //   // tableBtn: [{ edit: { code: 'user-edit-user' } }, { more: { list: userMoreList, code: 'user-more' } }]
+      // },
       items: {
         search: {
           account: { label: '账号', name: '你好', clearable: true, change: this.handleChange },
