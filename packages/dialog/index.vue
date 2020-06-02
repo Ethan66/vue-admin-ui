@@ -13,7 +13,7 @@
           </el-form-item>
           <template v-else>
             <el-form-item
-              v-if="['text', 'number', 'radio', 'textarea', 'select', ...dateTypeList].includes(item.type) && item.show"
+              v-if="['text', 'number', 'radio', 'checkbox', 'textarea', 'select', ...dateTypeList].includes(item.type) && item.show"
               :class="['label' + chineseTybe, { radio: ['radio'].includes(item.type) }]"
               :label="item.label"
               :prop="item.key"
