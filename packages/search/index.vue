@@ -62,6 +62,7 @@ export default {
       type: Boolean,
       default: true
     },
+    showAll: Boolean,
     // 搜索默认值
     searchDefaultObj: Object
   },
@@ -69,7 +70,7 @@ export default {
     return {
       dateTypeList: ['year', 'month', 'date', 'dates', 'week', 'datetime', 'datetimerange', 'daterange', 'monthrange'], // ele-date默认type类型
       defaultShowNumber: 6, // 默认展示的搜索条数
-      showAll: false
+      isShowAll: this.showAll
     }
   },
   computed: {
@@ -77,7 +78,7 @@ export default {
       return this.items
     },
     newItems () {
-      if (this.showAll) {
+      if (this.isShowAll) {
         return this.configItems
       } else {
         return this.configItems.slice(0, this.defaultShowNumber)
@@ -116,7 +117,7 @@ export default {
     },
     // 是否展示全部
     handleShowAll () {
-      this.showAll = true
+      this.isShowAll = true
     },
     // 搜索
     handleSearch () {
