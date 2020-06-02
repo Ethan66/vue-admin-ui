@@ -66,17 +66,17 @@
     <!-- 页码 -->
     <div
       class="right"
-      v-if="tablePages.current"
+      v-if="page.current"
     >
       <el-pagination
-        :current-page.sync="tablePages.current"
+        :current-page.sync="page.current"
         :page-sizes="[20, 40, 50, 100]"
-        :page-size="tablePages.pageSize"
-        :total="tablePages.total"
+        :page-size="page.pageSize"
+        :total="page.total"
         :layout="layout"
         background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
+        @size-change="onSizeChange"
+        @current-change="onCurrentChange"
       />
     </div>
   </div>
@@ -110,7 +110,7 @@ export default {
     // 需要减掉的高度
     reduceHeightClsNameList: Array,
     // 分页
-    tablePages: {
+    page: {
       type: Object,
       default () {
         return {}
@@ -144,7 +144,7 @@ export default {
         return false
       }
       let timer = setTimeout(() => {
-        this.handleSetTableHeight()
+        this.onSetTableHeight()
         clearTimeout(timer)
       }, 100)
     })
@@ -153,24 +153,24 @@ export default {
         this.tableHeight = this.maxHeight
         return false
       }
-      this.handleSetTableHeight()
+      this.onSetTableHeight()
     }
   },
   methods: {
     // 设置表格高度
-    handleSetTableHeight () {
+    onSetTableHeight () {
       this.tableHeight = getTableHeight(this.totalHeightClsName, this.reduceHeightClsNameList)
     },
     // 事件：每页几条
-    handleSizeChange (val) {
+    onSizeChange (val) {
       console.log(`每页 ${val} 条`)
-      this.tablePages.pageSize = val
-      this.handleCurrentChange(this.tablePages.current)
+      this.page.pageSize = val
+      this.onCurrentChange(this.page.current)
     },
     // 事件：page改变
-    handleCurrentChange (val) {
-      this.$emit('table-jump', val)
-      this.tablePages.current = val
+    onCurrentChange (val) {
+      this.$emit('jump', val)
+      this.page.current = val
     }
   }
 }
