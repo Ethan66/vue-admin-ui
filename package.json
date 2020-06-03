@@ -1,6 +1,6 @@
 {
   "name": "vue-admin-ui-lib",
-  "version": "1.0.16",
+  "version": "1.0.19",
   "description": "",
   "main": "lib/index.js",
   "style": "lib/style/index.css",
@@ -61,7 +61,6 @@
     "nprogress": "^0.2.0",
     "store": "^2.0.12",
     "vue": "^2.5.11",
-    "vue-admin-methods": "^1.0.25",
     "vue-router": "^3.1.6",
     "vuex": "^3.4.0"
   }

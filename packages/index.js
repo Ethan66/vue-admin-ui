@@ -1,6 +1,4 @@
-import {
-  onCreateBasicData, menuRelation, menuSort
-} from './utils'
+import adminMethods from './utils'
 import searchModule from './search'
 import tableModule from './table'
 import dialogModule from './dialog'
@@ -27,9 +25,7 @@ const adminModule = (Vue) => {
 }
 
 export {
-  onCreateBasicData,
-  menuRelation,
-  menuSort,
+  adminMethods,
   adminModule,
   searchModule,
   tableModule,
