@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "es6", // 用es6的语法
+    "target": "es5", // 打包最终生成ES5语法
+    "lib": ["es2015", "es2017", "dom"],
+    "allowJs": true, // 允许引入js文件
+    "experimentalDecorators": true // 支持装饰器
+  },
+  "include": [ // 哪些路径需要ts解析
+    "packages/utils/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

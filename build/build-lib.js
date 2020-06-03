@@ -7,7 +7,8 @@ const { Signale } = signale
 const tasks = [
   'build:entry',
   'build:components',
-  'build:style'
+  'build:style',
+  'build:ts'
 ]
 
 tasks.forEach(task => {

@@ -1,0 +1,24 @@
+.tableModule{
+  .menuNameWrap{
+    padding: 0 10px;
+    &.cursor{
+      cursor: pointer;
+    }
+    .arrow{
+      display: inline-block; width: 14px; height:12px;
+      position: relative;
+      &:before{
+        display: inline-block; content: ''; width: 0; height: 0;
+        border: 5px solid transparent; border-left-color: #b2b2b2;
+        position: absolute; left: 0; top: 2px;
+      }
+      &.arrowDown:before{
+        transform: rotate(90deg);
+        left: -2px; top: 4px;
+      }
+      &.arrowRight:before{
+        border-left-color: #b2b2b2;
+      }
+    }
+  }
+}

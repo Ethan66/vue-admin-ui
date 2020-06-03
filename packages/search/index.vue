@@ -4,36 +4,32 @@
     <el-form :inline="true" :model="value" size="small">
         <template v-for="(item, i) in newItems">
           <el-form-item
-            v-if="['input', 'select', ...dateTypeList].includes(item.type) && item.show"
+            v-if="item.$attr.slot"
             :label="item.label"
+            :prop="item.key"
             :key="i"
           >
-            <basic-module
-              :dateTypeList="dateTypeList"
-              :config="item"
-              :result="value"
-            ></basic-module>
+            <slot :name="item.$attr.slot"></slot>
           </el-form-item>
-          <el-form-item
-            v-if="item.type === 'selectTree'"
-            :label="item.label"
-            :key="i"
-          >
-            <tree-select
-              ref="selectTree"
-              clearable
-              collapseTags
-              :checkStrictly="item.checkStrictly"
-              :searchItemKey="item.key"
-              :multiple="item.treeMultiple"
-              width="100%"
-              :height="item.treeHeight || 400"
-              :data="item.data"
-              :defaultProps="item.defaultProps"
-              nodeKey="id" :defaultCheckedKeys="item.treeDefaultCheckedValue"
-              @popoverHide="popoverHide"
-            />
-          </el-form-item>
+          <template v-else>
+            <el-form-item
+              v-if="['input', 'select', ...dateTypeList].includes(item.type) && item.show"
+              :label="item.label"
+              :key="i"
+            >
+              <basic-module
+                :dateTypeList="dateTypeList"
+                :config="item"
+                :result="value"
+              ></basic-module>
+            </el-form-item>
+            <el-form-item
+              v-if="item.type === 'selectTree'"
+              :label="item.label"
+              :key="i"
+            >
+            </el-form-item>
+          </template>
         </template>
       <el-form-item class="noMarginBottom">
         <el-button type="primary" icon="el-icon-search" @click.native.prevent="handleSearch()">查询</el-button>
@@ -44,7 +40,6 @@
 </template>
 
 <script>
-import treeSelect from '../modules/tree-select'
 import basicModule from './basic'
 export default {
   name: 'searchModule',
@@ -131,15 +126,10 @@ export default {
         }
       })
       this.$emit('search', this.value)
-    },
-    // 拿到选择树的值
-    popoverHide (checkedIds, checkedData, searchItemKey) {
-      this.$set(this.value, searchItemKey, checkedIds)
-      this.$emit('handleSelectTreeValue', checkedData)
     }
   },
   components: {
-    treeSelect, basicModule
+    basicModule
   }
 }
 </script>

@@ -1,6 +1,6 @@
 
 <!--
-    /** 单多选（父子互相关联并且父亲id可以传给后端）
+    /** 单多选
      * <tree-select :height="400" // 下拉框中树形高度
      *          :width="200" // 下拉框中树形宽度
      *         size="small"  // 输入框的尺寸: medium/small/mini
@@ -9,26 +9,12 @@
      *         multiple   // 是否多选
      *         clearable   // 可清空选择
      *         collapseTags   // 多选时将选中值按文字的形式展示
+     *         checkStrictly // 多选时，严格遵循父子不互相关联
      *         :nodeKey="nodeKey"   // 绑定nodeKey，默认绑定'id'
-     *         :checkedKeys="defaultCheckedKeys"  // 传递默认选中的节点key组成的数组
-     *         @popoverHide="popoverHide"> // 事件有两个参数：第一个是所有选中的节点ID，第二个是所有选中的节点数据
+     *         :defaultChecked="defaultChecked"  // 传递默认选中的节点key组成的数组
+     *         >
      *         </tree-select>
      */
--->
-<!--
-  /* 单多选（父子不互相关联，且父亲id不能传给后端）
-   <tree-select :height="400" :width="200" size="small"
-     *         :data="data" // [{ name: '一级', cannotClick: true, id: '1', children: [{ name: '二级', id: '2' }] }], 设置父亲不可以点击
-     *         :defaultProps="defaultProps" // { label: 'name', children: 'children', disabled: 'cannotClick' }
-     *         multiple
-     *         clearable
-     *         collapseTags
-     *         checkStrictly // 多选时，严格遵循父子不互相关联
-     *         :nodeKey="nodeKey"
-     *         :checkedKeys="defaultCheckedKeys"
-     *         @popoverHide="popoverHide">
-     *         </tree-select>
-   */
 -->
 <template>
   <div class="tree-select">
@@ -62,7 +48,7 @@
 
 <script>
 export default {
-  name: 'tree-select',
+  name: 'select-tree',
   props: {
     // 树结构数据
     data: {
@@ -71,7 +57,6 @@ export default {
         return []
       }
     },
-    searchItemKey: String,
     defaultProps: Object,
     // 配置是否可多选
     multiple: Boolean,
@@ -86,7 +71,7 @@ export default {
     // 显示复选框情况下，是否严格遵循父子不互相关联
     checkStrictly: Boolean,
     // 默认选中的节点key数组
-    defaultCheckedKeys: {
+    defaultChecked: {
       type: Array,
       default () {
         return []
@@ -96,7 +81,10 @@ export default {
       type: String,
       default: 'small'
     },
-    width: Number | String,
+    width: {
+      type: Number | String,
+      default: '100%'
+    },
     height: {
       type: Number,
       default: 300
@@ -118,12 +106,12 @@ export default {
   },
   methods: {
     initCheckedData () {
-      let defaultCheckedKeys = this.defaultCheckedKeys
-      if (defaultCheckedKeys.length > 0) {
+      let defaultChecked = this.defaultChecked
+      if (defaultChecked.length > 0) {
         if (this.multiple) { // 多选
-          this.$refs.tree.setCheckedKeys(defaultCheckedKeys)
+          this.$refs.tree.setCheckedKeys(defaultChecked)
         } else { // 单选
-          var checkedKey = defaultCheckedKeys[0]
+          var checkedKey = defaultChecked[0]
           this.$refs.tree.setCurrentKey(checkedKey) // 设置树高亮
           var node = this.$refs.tree.getNode(checkedKey) // 获取默认选中的节点的node数据
           node && this.handleNodeClick(undefined, node) // 设置options
@@ -187,7 +175,7 @@ export default {
       } else {
         checkedData = this.$refs.tree.getCurrentNode()
       }
-      this.$emit('popoverHide', this.checkedKeys, checkedData, this.searchItemKey)
+      this.$emit('input', this.checkedKeys)
     }
   },
   watch: {

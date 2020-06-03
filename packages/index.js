@@ -1,14 +1,17 @@
-import handleBasicObj from 'vue-admin-methods'
+import {
+  onCreateBasicData, menuRelation, menuSort
+} from './utils'
 import searchModule from './search'
 import tableModule from './table'
 import dialogModule from './dialog'
-// import dialogDetail from './dialog-module/detail'
+import cellTree from './table-cell-tree'
+import selectTree from './select-tree'
 
 const components = [
   searchModule,
   tableModule,
   dialogModule,
-  // dialogDetail
+  selectTree
 ]
 
 components.forEach(item => {
@@ -24,10 +27,13 @@ const adminModule = (Vue) => {
 }
 
 export {
-  handleBasicObj,
+  onCreateBasicData,
+  menuRelation,
+  menuSort,
   adminModule,
   searchModule,
   tableModule,
   dialogModule,
-  // dialogDetail
+  cellTree,
+  selectTree
 }

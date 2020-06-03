@@ -1,6 +1,6 @@
 {
   "name": "vue-admin-ui-lib",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "",
   "main": "lib/index.js",
   "style": "lib/style/index.css",
@@ -13,6 +13,7 @@
     "build:components": "node build/build-components.js --color",
     "build:style": "node build/build-style.js",
     "build:lib": "node build/build-lib.js",
+    "build:ts": "webpack --config build/webpack.ts.js",
     "pub": "npm run build:lib && npm publish --registry=https://registry.npmjs.org/"
   },
   "keywords": [],
@@ -41,6 +42,8 @@
     "shelljs": "^0.8.4",
     "signale": "^1.4.0",
     "style-loader": "^1.2.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
     "url-loader": "^4.1.0",
     "vue-loader": "^15.4.1",
     "vue-sfc-compiler": "^0.1.3",

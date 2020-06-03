@@ -16,24 +16,3 @@ export const getTableHeight = (totalClsName, reduceClsNameList = []) => {
   return tableHeight < 400 ? 400 : tableHeight
 }
 
-// 设置table单元格className
-export const getCellClass = (row, newTableItem, cb) => {
-  let result = []
-  if (typeof cb === 'function') {
-    result.push(cb(row))
-  } else if (typeof cb === 'string') {
-    result.push(cb)
-  }
-  if (row.columnIndex === 1) {
-    if (newTableItem[0].type === 'selection') {
-      result.push('starting')
-    }
-    return result
-  }
-  if (row.columnIndex === newTableItem.length - 1) {
-    if (newTableItem.slice(-1)[0].type === 'btn') {
-      result.push('headSetting')
-    }
-    return result
-  }
-}
