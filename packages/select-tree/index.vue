@@ -99,6 +99,7 @@ export default {
     }
   },
   mounted () {
+    console.log(33)
     this.initCheckedData()
     if (this.width === '100%') {
       this.newWidth = document.querySelector('.tree-select').offsetWidth
@@ -115,6 +116,7 @@ export default {
           this.$refs.tree.setCurrentKey(checkedKey) // 设置树高亮
           var node = this.$refs.tree.getNode(checkedKey) // 获取默认选中的节点的node数据
           node && this.handleNodeClick(undefined, node) // 设置options
+          !node && (this.checkedKeys = '')
         }
       }
     },
@@ -182,6 +184,9 @@ export default {
     isShowSelect (val) {
       // 隐藏select自带的下拉框
       this.$refs.select.blur()
+    },
+     defaultChecked () {
+      this.initCheckedData()
     }
   }
 }

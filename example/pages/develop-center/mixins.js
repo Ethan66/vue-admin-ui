@@ -18,7 +18,7 @@ export const menu = {
           btn: { width: 118 }
         },
         dialog: {
-          menuParentName: { label: '上级菜单', show: false },
+          // menuParentName: { label: '上级菜单', show: false },
           // menuParentId: { label: '上级菜单', type: 'selectTree', defaultProps: { children: 'list', label: 'menuName' }, dialogData: [] },
           menuParentId: { label: '上级菜单', slot: 'tree' },
           menuName: { label: '菜单名称' },

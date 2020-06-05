@@ -82,7 +82,7 @@ export default {
   methods: {
     // 获取所有父菜单树
     handleGetAllParentTree () {
-      this.selectTreeCheckedValue = []
+      this.checkedKeys = []
       let filterArr = JSON.parse(JSON.stringify(this.allData.filter(item => item.menuLevel !== 3)))
       this.allParentMenu = adminUtils.menuRelation(filterArr, 'id', 'menuParentId', 'menuLevel', 'sortNo')
     },
@@ -141,8 +141,8 @@ export default {
     handleEditData (item) {
       this.$setItem(this.dialogItem, 2, 'disabled', true)
       this.editData = Object.assign({}, item)
-      item.menuParentId && this.checkedKeys.push(item.menuParentId)
       this.handleGetAllParentTree()
+      this.checkedKeys.push(item.menuParentId)
       this.showDialogForm = true
     },
     handleDeleteData () {}
