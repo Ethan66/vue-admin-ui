@@ -33,7 +33,7 @@
         </template>
       <el-form-item class="noMarginBottom">
         <el-button type="primary" icon="el-icon-search" @click.native.prevent="handleSearch()">查询</el-button>
-        <el-button type="info" icon="el-icon-delete" @click.native.prevent="handleClear()" v-if="showReset">重置</el-button>
+        <el-button type="danger" icon="el-icon-delete" @click.native.prevent="handleClear()" v-if="showReset">重置</el-button>
       </el-form-item>
     </el-form>
   </div>

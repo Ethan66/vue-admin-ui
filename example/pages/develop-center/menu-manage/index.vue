@@ -139,6 +139,7 @@ export default {
       }
     },
     handleEditData (item) {
+      this.$setItem(this.dialogItem, 2, 'disabled', true)
       this.editData = Object.assign({}, item)
       item.menuParentId && this.checkedKeys.push(item.menuParentId)
       this.handleGetAllParentTree()

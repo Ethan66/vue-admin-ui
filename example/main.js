@@ -28,6 +28,7 @@ Vue.use(ElementUI)
 Vue.prototype.$systemObj = systemObj
 Vue.prototype.$authBtn = authBtn
 Vue.prototype.$InitObj = adminUtils.onCreateBasicData({ defaultDialogBtn: dialogBtn })
+Vue.prototype.$setItem = adminUtils.setItemProp
 
 let vm = new Vue({
   el: '#app',

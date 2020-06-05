@@ -45,3 +45,13 @@ export const menuSort = (arr: any[], key: string, sort: string): any[] => {
   }
   return arr
 }
+
+interface Iitem {
+  (item: { '$attr': object, [key: string]: any }, index: number, prop: string, val: boolean | string): void
+}
+
+// 修改searchItem,dialogItem的attr属性
+export const setItemProp: Iitem = function (item, index, prop, val) {
+  console.log(this)
+  this.$set(item[index].$attr, prop, val)
+}

@@ -129,7 +129,7 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
       }
       const listeners = ['click', 'change', 'input', 'focus', 'blur']
       const externalKeys = ['key', 'show', 'type', 'label', 'options']
-      const placeholderList = ['input','number', 'password', 'textarea'];
+      const placeholderList = ['text', 'input','number', 'password', 'textarea'];
       (modules as string[]).forEach(module => {
         let configObj = items[module]
         let keys = Object.keys(configObj)
