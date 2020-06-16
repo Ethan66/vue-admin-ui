@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     configItems () {
-      return this.items.filter(item.show !== false)
+      return this.items.filter(item => item.show !== false)
     },
     newItems () {
       if (this.isShowAll) {
