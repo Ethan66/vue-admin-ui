@@ -1,9 +1,10 @@
 {
   "name": "vue-admin-ui-lib",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "",
   "main": "lib/index.js",
   "style": "lib/style/index.css",
+  "types": "lib/utils/index.d.ts",
   "files": [
     "lib",
     "packages"

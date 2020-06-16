@@ -1,13 +1,24 @@
 {
   "compilerOptions": {
-    "module": "es6", // 用es6的语法
-    "target": "es5", // 打包最终生成ES5语法
-    "lib": ["es2015", "es2017", "dom"],
-    "allowJs": true, // 允许引入js文件
-    "experimentalDecorators": true // 支持装饰器
+    "moduleResolution": "node", // 按照node的规则去找文件
+    "target": "es5", // 输出代码版本
+    "module":"es2015", // 生成代码的模块标准
+    "lib": ["es2015", "es2016", "es2017", "dom"], // 编译过程中需要引入的库文件的列表
+    // "strict": true, // 开启所有严格的类型检查
+    "sourceMap": true,
+    "declaration": true, // 打包生成声明文件，这样引入的时候可以校验
+    "noImplicitAny": false, // 不允许隐式的any类型
+    "allowSyntheticDefaultImports": true, // 允许引入没有默认导出的模块
+    "experimentalDecorators": true, // 允许注释语法
+    "emitDecoratorMetadata": true,
+    "declarationDir": "lib/utils", // 打包生成声明文件的路径
+    "outDir": "lib/utils", // 指定输出目录
+    "typeRoots": [ // 声明文件目录，默认node_modules/@types
+      "node_modules/@types"
+    ]
   },
   "include": [ // 哪些路径需要ts解析
-    "packages/utils/*.ts"
+    "packages/utils"
   ],
   "exclude": [
     "node_modules"

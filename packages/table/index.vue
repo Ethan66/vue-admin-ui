@@ -100,8 +100,6 @@ export default {
     },
     // 自定义最大高度
     maxHeight: String,
-    headerCellClassName: Function || String,
-    cellClassName: Function || String,
     // 默认总高度为菜单高度
     totalHeightClsName: {
       type: String,
@@ -134,7 +132,7 @@ export default {
     },
     // 表头过滤tableItem
     tableItem () {
-      return this.items
+      return this.items.filter(item => item.show !== false)
     },
   },
   mounted () {

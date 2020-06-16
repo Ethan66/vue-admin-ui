@@ -13,7 +13,7 @@
           </el-form-item>
           <template v-else>
             <el-form-item
-              v-if="['input', 'select', ...dateTypeList].includes(item.type) && item.show"
+              v-if="['input', 'select', ...dateTypeList].includes(item.type)"
               :label="item.label"
               :key="i"
             >
@@ -22,12 +22,6 @@
                 :config="item"
                 :result="value"
               ></basic-module>
-            </el-form-item>
-            <el-form-item
-              v-if="item.type === 'selectTree'"
-              :label="item.label"
-              :key="i"
-            >
             </el-form-item>
           </template>
         </template>
@@ -70,7 +64,7 @@ export default {
   },
   computed: {
     configItems () {
-      return this.items
+      return this.items.filter(item.show !== false)
     },
     newItems () {
       if (this.isShowAll) {
@@ -103,12 +97,11 @@ export default {
     // 清空搜索数据
     handleClear () {
       sessionStorage.removeItem('activedSearchValues')
-      if (Object.prototype.toString.call(this.searchDefaultObj) === '[object Object]') {
+      if (this.searchDefaultObj) {
         this.$emit('input', Object.assign({}, this.searchDefaultObj))
       } else {
         this.$emit('input', {})
       }
-      this.$refs.selectTree && (this.$refs.selectTree[0].clearHandle())
     },
     // 是否展示全部
     handleShowAll () {
@@ -116,16 +109,17 @@ export default {
     },
     // 搜索
     handleSearch () {
-      Object.keys(this.value).forEach(key => {
+      let value = Object.assign({}, this.value)
+      Object.keys(value).forEach(key => {
         if (/\w+,\w+/.test(key)) {
           const tmpKeys = key.split(',')
-          const tmp = this.value[key]
-          this.value[tmpKeys[0]] = tmp[0]
-          this.value[tmpKeys[1]] = tmp[1]
-          delete this.value[key]
+          const tmp = value[key]
+          value[tmpKeys[0]] = tmp[0]
+          value[tmpKeys[1]] = tmp[1]
+          delete value[key]
         }
       })
-      this.$emit('search', this.value)
+      this.$emit('search', value)
     }
   },
   components: {

@@ -6,12 +6,15 @@ function resolve (dir) {
 module.exports = {
   mode: 'production',
   devtool: 'cheap-module-eval-source-map',
-  entry:  resolve ('./packages/utils/index.js'),
+  entry:  resolve ('./packages/utils/index.ts'),
   output: {
     path: resolve('/lib/utils/'),
     filename: 'index.js',
     library: 'vueAdminMethods',
     libraryTarget: 'umd'
+  },
+  resolve: {
+    extensions: ['.js', '.ts']
   },
   module: {
     rules: [{

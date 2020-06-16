@@ -25,6 +25,7 @@ interface Ioptions {
   }
   rules?:  { [key: string]: object }
 }
+
 const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: IdefaultDialogBtn }): Function {
   class InitObj {
     searchItem: []
@@ -35,7 +36,6 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
     tableItem: []
     tableLoading: boolean
     isEdit: number
-    // tableBtn: []
     tablePages: { total: number, current: number, pageSize: number }
     chooseDataArr: []
     
@@ -45,6 +45,7 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
     dialogBtn: []
     showDialogForm: boolean
     rules: {}
+
     constructor (options: Ioptions) {
       const modules: string[] = Object.keys(options.items) as string[]
       modules.forEach((module) => {
@@ -64,11 +65,11 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
       return this
     }
 
-    initSearchObj () {
+    initSearchObj (): void {
       this.searchItem = []
       this.searchValues = {}
     }
-    initTableObj (tableBtn: object = ['edit', 'delete']) {
+    initTableObj (): void {
       this.allData = []
       this.tableData = []
       this.tableItem = []
