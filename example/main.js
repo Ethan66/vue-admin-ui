@@ -12,7 +12,7 @@ import { dialogBtn } from '@/config/defaultBtnData'
 
 // const { handleBasicObj } = window.handleBasicObj.default
 
-import adminUtils from '$pkg/utils/index'
+import adminUtils from '$pkg/utils/index.ts'
 
 import {
   searchModule,

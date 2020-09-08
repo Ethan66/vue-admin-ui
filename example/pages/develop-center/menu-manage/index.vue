@@ -59,7 +59,7 @@
 <script>
 import { menu } from '../mixins'
 import basicMethod from '@/config/mixins'
-import adminUtils  from '$pkg/utils'
+import adminUtils  from '$pkg/utils/index.ts'
 import { apiModifyMenu, apiAddMenu, apiDeleteMenu } from '@/api/developCenter'
 import { apiGetAllMenu } from '@/api/login'
 import cellTree from '$pkg/table-cell-tree' // 表格树

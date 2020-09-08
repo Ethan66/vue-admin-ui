@@ -1,5 +1,5 @@
-import onCreateBasicData from './basicObj'
-import { menuRelation, menuSort, setItemProp } from './methods'
+import onCreateBasicData from './basicObj.ts'
+import { menuRelation, menuSort, setItemProp } from './methods.ts'
 import { Types } from './types/index'
 
 export * from './types/index'
