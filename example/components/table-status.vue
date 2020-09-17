@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import statusClsName from './config/defaultStatusClsName'
+import statusClsName from './defaultStatusClsName'
 
 export default {
   props: {
@@ -40,7 +40,6 @@ export default {
   .el-table__body-wrapper{
     & > table {
       tr td span.status{
-        margin-left: -15px;
         &>.status-i {
           display: inline-block;
           width: 6px;

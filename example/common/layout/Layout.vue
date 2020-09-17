@@ -28,26 +28,7 @@ export default {
     return {
       logo: require(`@/${this.$systemObj.logo}.png`)
     }
-  },
-  // 跳转到默认的home页
-  /* computed: {
-    mainTabs: {
-      get () { return this.$store.state.app.mainTabs },
-      set (val) { this.$store.commit('UPDATETABS', val) }
-    },
-    mainActivedTab: {
-      get () { return this.$store.state.app.mainActivedTab },
-      set (val) { this.$store.commit('UPDATEMINACTIVEDTAB', val) }
-    }
-  },
-  methods: {
-    handleGoHome () {
-      this.$router.push({ name: 'home' })
-      this.mainTabs = [{ name: '首页', url: '/' }]
-      this.mainActivedTab = this.mainTabs[0]
-      sessionStorage.setItem('mainActivedTab', JSON.stringify(this.mainActivedTab))
-    }
-  } */
+  }
 }
 </script>
 

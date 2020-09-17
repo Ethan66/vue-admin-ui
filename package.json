@@ -59,9 +59,12 @@
     "axios": "^0.19.2",
     "element-ui": "^2.13.2",
     "js-md5": "^0.7.3",
+    "mobile-detect": "^1.4.4",
     "nprogress": "^0.2.0",
     "store": "^2.0.12",
-    "vue": "^2.5.11",
+    "vue": "^2.6.12",
+    "vue-admin-methods": "^1.0.38",
+    "vue-admin-ui-lib": "^1.0.24",
     "vue-router": "^3.1.6",
     "vuex": "^3.4.0"
   }

@@ -15,23 +15,23 @@
         <img class="username" src="~@/assets/img/username.png" />{{ userName }}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item class="width100">
-          <span @click="changePassword">修改密码</span>
+        <el-dropdown-item>
+          <span @click="showDialogForm = true">修改密码</span>
         </el-dropdown-item>
         <el-dropdown-item>
-          <span @click="logout" class="width100">退出</span>
+          <span @click="logout">退出</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
-    <!-- <dialog-module
+    <dialog-module
       ref="dialog"
-      dialogTitle="修改密码"
-      :showDialogForm.sync="showDialogForm"
-      :editData="editData"
-      :dialogItem="dialogItem"
-      :dialogBtn="dialogBtn"
+      title="修改密码"
+      :showDialog.sync="showDialogForm"
+      :data="editData"
+      :items="dialogItem"
+      :btns="dialogBtn"
       :rules="rules"
-    /> -->
+    />
   </div>
 </template>
 
@@ -43,19 +43,32 @@ import MD5 from 'js-md5'
 
 export default {
   data () {
-    return {
+    return Object.assign({
       userName: '',
       showDialogForm: false,
-      editData: {},
-      dialogItem: [
-        { key: 'password', label: '原密码', type: 'input', show: true },
-        { key: 'newPassword', label: '新密码', type: 'password', show: true },
-        { key: 'checkNewPassword', label: '确认密码', type: 'password', show: true }
-      ],
-      dialogBtn: [
-        { name: '取消', type: 'delete', show: true, disabled: false, clickFn: 'btnCancel' },
-        { name: '确认', type: 'edit', show: true, color: 'primary', disabled: false, clickFn: 'handleChangePassword' }
-      ],
+      editData: {}
+      // dialogItem: [
+      //   { key: 'password', label: '原密码', type: 'input', show: true },
+      //   { key: 'newPassword', label: '新密码', type: 'password', show: true },
+      //   { key: 'checkNewPassword', label: '确认密码', type: 'password', show: true }
+      // ],
+      // dialogBtn: [
+      //   { name: '取消', type: 'delete', show: true, disabled: false, clickFn: 'btnCancel' },
+      //   { name: '确认', type: 'edit', show: true, color: 'primary', disabled: false, clickFn: 'handleChangePassword' }
+      // ],
+    }, new this.$InitObj({
+      btnConfig: {
+        dialogBtn: [
+          { confirm: { clickFn: 'handleChangePassword' } }, 'cancel'
+        ]
+      },
+      items: {
+        dialog: {
+          password: { label: '原密码' },
+          newPassword: { label: '新密码' },
+          checkNewPassword: { label: '确认密码' }
+        }
+      },
       rules: {
         password: [
           { required: true, message: '请输入原密码', trigger: 'blur' }
@@ -67,21 +80,22 @@ export default {
           { required: true, message: '请输入确认密码', trigger: 'blur' }
         ]
       }
-    }
+    }))
   },
   watch: {
-    $route (val) {
-      this.handleJudgeNowRoute(val)
+    $route: {
+      immediate: true,
+      handler: 'handleJudgeNowRoute'
     }
   },
   computed: {
     mainTabs: {
       get () { return this.$store.state.app.mainTabs },
-      set (val) { this.$store.commit('UPDATETABS', val) }
+      set (val) { this.$store.commit('UPDATE_MAINTABS', val) }
     },
     mainActivedTab: {
       get () { return this.$store.state.app.mainActivedTab },
-      set (val) { this.$store.commit('UPDATEMINACTIVEDTAB', val) }
+      set (val) { this.$store.commit('UPDATE_MINACTIVEDTAB', val) }
     },
     currentUrl: {
       get () { return this.mainActivedTab.url || '' },
@@ -110,7 +124,6 @@ export default {
     clickTab (tab) {
       if (this.mainTabs.length > 1 && this.currentUrl !== tab.name) {
         this.mainActivedTab = { name: tab.label, url: tab.name }
-        sessionStorage.setItem('mainActivedTab', JSON.stringify(this.mainActivedTab))
         this.$router.push({ name: tab.name })
       }
     },
@@ -151,14 +164,10 @@ export default {
           arr.push(tab)
           this.mainTabs = arr
           this.mainActivedTab = tab
-          sessionStorage.setItem('mainActivedTab', JSON.stringify(tab))
         } else if (this.mainTabs.some(item => item.url === nowUrl) && this.mainActivedTab.url !== nowUrl) {
           this.clickTab({ label, name: nowUrl })
         }
       }
-    },
-    changePassword () {
-      this.showDialogForm = true
     },
     logout () {
       this.$confirm('确定退出', '温馨提醒', {
@@ -175,9 +184,6 @@ export default {
           }
         }
       })
-    },
-    btnCancel () {
-      this.$refs.dialog.showDialogForm1 = false
     },
     handleChangePassword () {
       if (this.editData.newPassword !== this.editData.checkNewPassword) {

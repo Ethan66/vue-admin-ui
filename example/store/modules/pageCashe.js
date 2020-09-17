@@ -1,8 +1,7 @@
 const pageCashe = {
   state: {
     keepAliveList: [],
-    pageSearchValues: {},
-    subTabObj: {} // 副标签
+    pageSearchValues: {}
   },
   mutations: {
     UPDATE_KEEP_ALIVE_LIST: (state, payload) => {
@@ -26,22 +25,15 @@ const pageCashe = {
         data = []
         return true
       }
-      if (data[name]) {
-        // 每关闭一个tab后清除相应缓存
-        if (type === 'delete') {
-          delete data[name]
-          return true
-        }
+      if (type === 'delete') {
+        data[name] && delete data[name]
+        return
       }
       if (!value.searchValues) value.searchValues = {}
       data[name] = value
       let obj = {}
       obj[name] = value
-      console.log(JSON.stringify(value))
       sessionStorage.setItem('activedSearchValues', JSON.stringify(obj))
-    },
-    SAVE_SUBTABS_OBJ: (state, data) => {
-      state.subTabObj = data
     }
   }
 }

@@ -68,6 +68,25 @@ export default {
         return callback(new Error('请输入密码'))
       }
       callback()
+    },
+    // 失焦取消错误code码
+    handleBlur (type) {
+      let code = this.nowErrorCode
+      if (code) {
+        let obj = this.errorCodeObj[code]
+        if (obj && (obj.type === type || (obj.connect && obj.connect === type))) {
+          this.nowErrorCode = ''
+        }
+      }
+    },
+    // 特殊code码进行提示
+    handleSpeciaCode (code, form = 'login') {
+      if (Object.keys(this.errorCodeObj).includes(code)) {
+        this.nowErrorCode = code
+        this.$refs[form].validateField([this.errorCodeObj[code].type])
+        return true
+      }
+      return false
     }
   }
 }
