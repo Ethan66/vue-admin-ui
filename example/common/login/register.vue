@@ -29,7 +29,7 @@
         type="primary" @click.native.prevent="submitForm('register')"
       >确 认</el-button>
     </el-form-item>
-    <p class="forgetPwd cm-hover-color" @click="$emit('handleChangeComponent', 'login')">去登录？</p>
+    <p class="forgetPwd" @click="$emit('handle-change-component', 'login')">去登录？</p>
   </el-form>
 </template>
 
@@ -48,16 +48,6 @@ export default {
     }
   },
   methods: {
-    // 失焦取消错误code码
-    handleBlur (type) {
-      let code = this.nowErrorCode
-      if (code) {
-        let obj = this.errorCodeObj[code]
-        if (obj && (obj.type === type || (obj.connect && obj.connect === type))) {
-          this.nowErrorCode = ''
-        }
-      }
-    },
     // 注册
     submitForm (form) {
       this.$refs[form].validate((valid) => {
@@ -75,7 +65,7 @@ export default {
               this.$message.success('注册成功')
               this.$emit('handleChangeComponent', 'login')
             } else {
-              if (!this.handleSpeciaCode(res.code)) {
+              if (!this.handleSpeciaCode(res.code, 'register')) {
                 this.$message.error(res.message)
               }
               throw new Error()
@@ -85,15 +75,6 @@ export default {
           })
         }
       })
-    },
-    // 特殊code码进行提示
-    handleSpeciaCode (code) {
-      if (Object.keys(this.errorCodeObj).includes(code)) {
-        this.nowErrorCode = code
-        this.$refs.register.validateField([this.errorCodeObj[code].type])
-        return true
-      }
-      return false
     }
   }
 }

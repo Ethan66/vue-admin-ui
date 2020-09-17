@@ -19,14 +19,16 @@ export default {
   data () {
     return {
       showSubTabs: false,
-      transitionKey: 0,
       subTabsData: []
     }
   },
   watch: {
-    $route (val) {
-      this.transitionKey++
-      this.handleIsShowSubTabs(val)
+    $route: {
+      handler: function (val) {
+        val && val.meta.menuCode && this.$store.commit('UPDATE_KEEP_ALIVE_LIST', { name: val.meta.menuCode })
+        this.handleIsShowSubTabs(val)
+      },
+      immediate: true
     }
   },
   computed: {
@@ -38,8 +40,6 @@ export default {
   methods: {
     handleIsShowSubTabs (val, isRefresh = false) {
       let path = val.path.split('/').slice(0, -1).join('/')
-      let { title, level } = val.meta
-      let index = -1
       if (this.subTabObj[path]) {
         this.showSubTabs = true
         this.subTabsData = this.subTabObj[path]

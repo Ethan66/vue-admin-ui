@@ -10,7 +10,10 @@ module.exports = function(api) {
         '@babel/preset-env',
         {
           loose: true,
-          modules: useESModules ? false : 'commonjs'
+          modules: useESModules ? false : 'commonjs',
+          targets: {
+            esmodules: true,
+          }
         },
       ],
       '@vue/babel-preset-jsx'

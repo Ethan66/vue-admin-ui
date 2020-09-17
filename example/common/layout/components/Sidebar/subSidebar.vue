@@ -2,33 +2,33 @@
   <div class="sidebarContent">
     <!--只有一级菜单-->
     <template v-if="!item.list || item.list.length === 0">
-      <router-link :to="item.menuUrl">
-        <el-menu-item :index="item.menuUrl" :class="{'nosubmenu-arrow':!isNest}" @click="handleChooseMenu(item)">
+      <router-link :to="item[menu.url]">
+        <el-menu-item :index="item[menu.url]" :class="{'nosubmenu-arrow':!isNest}" @click="handleChooseMenu(item)">
           <template slot="title">
-            <img v-if="item.menuIcon" :src="require(`@/assets/img${item.menuIcon}.png`)" class="iconfont" /><span slot="title">{{ item.menuName }}</span>
+            <img v-if="item[menu.icon]" :src="require(`@/assets/img${item[menu.icon]}.png`)" class="iconfont" /><span slot="title">{{ item[menu.name] }}</span>
           </template>
         </el-menu-item>
       </router-link>
     </template>
 
     <!--二级菜单-->
-    <el-submenu v-else :index="item.code">
+    <el-submenu v-else :index="item[menu.unique]">
       <template slot="title">
-        <img v-if="item.menuIcon" :src="require(`@/assets/img${item.menuIcon}.png`)" class="iconfont" /><span slot="title">{{ item.menuName }}</span>
+        <img v-if="item[menu.icon]" :src="require(`@/assets/img${item[menu.icon]}.png`)" class="iconfont" /><span slot="title">{{ item[menu.name] }}</span>
       </template>
 
       <template v-for="child in item.list">
-        <my-sidebar
+        <subSidebar
           v-if="child.list&&child.list.length>0"
           :is-nest="true"
           :item="child"
-          :key="child.menuUrl"
-          :base-path="child.menuUrl"
+          :key="child[menu.url]"
+          :base-path="child[menu.url]"
           class="nest-menu" />
-        <router-link v-else :to="child.menuUrl" :key="child.name">
-          <el-menu-item :index="child.menuUrl" @click="handleChooseMenu(child)">
+        <router-link v-else :to="child[menu.url]" :key="child[menu.name]">
+          <el-menu-item :index="child[menu.url]" @click="handleChooseMenu(child)">
             <template slot="title">
-              <i v-if="child.menuIcon" class="iconfont" :class="child.menuIcon" /><span slot="title">{{ child.menuName }}</span>
+              <i v-if="child[menu.icon]" class="iconfont" :class="child[menu.icon]" /><span slot="title">{{ child[menu.name] }}</span>
             </template>
           </el-menu-item>
         </router-link>
@@ -52,15 +52,12 @@ export default {
     basePath: {
       type: String,
       default: ''
-    },
-    index: {
-      type: Number,
-      required: true
     }
   },
   data () {
     return {
-      onlyChild: null
+      onlyChild: null,
+      menu: this.$systemObj.menuConfig
     }
   },
   methods: {

@@ -1,97 +1,10 @@
-// 转换时间戳
-export const format = (now, fmt = 'yyyy-MM-dd hh:mm:ss') => {
-  now = new Date(now)
-  const o = {
-    'M+': now.getMonth() + 1, // 月份
-    'd+': now.getDate(), // 日
-    'h+': now.getHours(), // 小时
-    'm+': now.getMinutes(), // 分
-    's+': now.getSeconds(), // 秒
-    'q+': Math.floor((now.getMonth() + 3) / 3), // 季度
-    'S': now.getMilliseconds() // 毫秒
-  }
-  if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(RegExp.$1, (now.getFullYear() + '').substr(4 - RegExp.$1.length))
-  }
-  for (let k in o) {
-    if (new RegExp('(' + k + ')').test(fmt)) {
-      fmt = fmt.replace(RegExp.$1, String(o[k]).padStart(RegExp.$1.length, 0))
-    }
-  }
-  return fmt
-}
+import { Message } from 'element-ui'
 
-// 菜单父子级关联
-export const menuRelation = (data, id, pId, level, sort, list = 'list') => {
-  if (!data.length) return data
-  let template = {}
-  data.forEach(item => {
-    item.level = item[level]
-    template[item[id]] = item
-  })
-  let arr = []
-  data.forEach(item => {
-    if (!item[pId]) {
-      if (!template[item[id]][list]) {
-        template[item[id]][list] = []
-      }
-      arr.push(template[item[id]])
-    } else if (template[item[pId]]) {
-      if (!template[item[pId]][list]) {
-        template[item[pId]][list] = []
-      }
-      template[item[pId]][list].push(item)
-    } else {
-      arr.push(item)
-    }
-  })
-  if (sort) {
-    menuSort(arr, list, sort)
-  }
-  return arr
-}
-
-// 目录排序
-export const menuSort = (arr, key, sort) => {
-  if (Array.isArray(arr) && arr[0]) {
-    if (arr.length > 1) {
-      arr.sort((v1, v2) => {
-        return v1[sort] - v2[sort]
-      })
-    }
-    arr.length === 1 && (arr[0].onlyOne = true)
-    arr[0].first = true
-    arr[arr.length - 1].last = true
-    arr.forEach(item => {
-      item[key] && menuSort(item[key], key, sort)
-    })
-  }
-  return arr
-}
-
-// 处理树形结构数据
-export const disposeTreeData = (list, parentId = 'parentId', returnId = 0) => {
-  let min = Infinity
-  let cloneData = JSON.parse(JSON.stringify(list)) // 对源数据深度克隆
-  function compare (key) {
-    return function (a, b) {
-      return (a[key] - b[key])
-    }
-  }
-  cloneData.sort(compare('sortNo'))
-  return cloneData.filter(father => { // 循环所有项，并添加children属性
-    let branchArr = cloneData.filter(child => { // 返回每一项的子级数组
-      if (child.departmentLevel < min) {
-        min = child.departmentLevel
-      }
-      return father.id === child[parentId]
-    })
-    father.childIdList = branchArr.length > 0 ? branchArr : [] // 给父级添加一个children属性，并赋值
-    if (father['departmentLevel'] === min) { // 存在departmentLevel为部门树
-      return father['departmentLevel'] === min // 返回第一层
-    } else { // 员工数
-      return father[parentId] === returnId // 返回第一层
-    }
+export const getSuccessMsg = function (text, type = 'success') {
+  Message({
+    message: text,
+    type: type,
+    duration: 2000
   })
 }
 
@@ -112,14 +25,90 @@ export const purifyParams = (params) => {
   return result
 }
 
-// 防抖
-export const debounce = (fn, delay = 500) => {
-  let timer = null
-  return () => {
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      fn()
-      clearTimeout(timer)
-    }, delay)
+export const setMoreItems = (keys, config) => {
+  if (!Array.isArray(keys) && typeof keys !== 'string') {
+    console.error('setMoreItems的keys类型不正确')
+    return true
   }
+  const result = {}
+  keys.toString().split(',').forEach((key, i) => {
+    let tmp = key.match(/^([^\d]+)([\d]+)$/)
+    if (tmp === null) {
+      throw new Error('setMoreItems的keys格式不正确')
+    }
+    result[key] = config[tmp[1]]
+  })
+  return result
+}
+
+// 点击搜索按钮
+export const handleSearch = function (val) {
+  this.queryData = val
+  handleGetTableData.call(this, this.getTableDataApi, val, 1)
+}
+
+// 获取表格数据
+export const handleGetTableData = function (api, val = this.queryData, currentPage = this.tablePages.current) {
+  this.getTableDataApi = api
+  this.tableLoading = true
+  let params = Object.assign({
+    currentPage: currentPage || this.tablePages.current,
+    pageSize: this.tablePages.pageSize
+  }, val)
+  api(params).then(res => {
+    if (res.code === '000000') {
+      const { list, page } = res.data
+      this.tableData = this.allData = list
+      if (page) {
+        this.tablePages.current = page.currentPage
+        this.tablePages.total = page.total
+      }
+      this.tableLoading = false
+    } else {
+      Message.error(res.msg)
+    }
+  })
+}
+
+// 选择页面跳转
+export const handleChangePage = function (currentPage) {
+  handleGetTableData.call(this, this.getTableDataApi, this.searchValues, currentPage)
+}
+
+// 接口：创建表格数据
+export const apiCreateData = function (createDataApi, obj, getTableDataApi = this.getTableDataApi) {
+  createDataApi(obj).then(res => {
+    if (res.code === '000000') {
+      this.$refs.dialog && (this.$refs.dialog.showDialog1 = false)
+      getSuccessMsg(res.msg)
+      getTableDataApi && handleGetTableData.call(this, getTableDataApi)
+    } else {
+      Message.error(res.msg)
+    }
+  })
+}
+
+// 接口：编辑表格数据
+export const apiEditData = function (editDataApi, obj, getTableDataApi = this.getTableDataApi) {
+  editDataApi(obj).then(res => {
+    if (res.code === '000000') {
+      this.$refs.dialog && (this.$refs.dialog.showDialog1 = false)
+      getSuccessMsg(res.msg)
+      getTableDataApi && handleGetTableData(this, getTableDataApi)
+    } else {
+      Message.error(res.msg)
+    }
+  })
+}
+
+// 接口：删除表格数据
+export const apiDeleteData = function (deleteDataApi, id, getTableDataApi = this.getTableDataApi) {
+  deleteDataApi({ id }).then(res => {
+    if (res.code === '000000') {
+      getSuccessMsg('删除成功')
+      getTableDataApi && handleGetTableData.call(this, getTableDataApi)
+    } else {
+      Message.error(res.msg)
+    }
+  })
 }
