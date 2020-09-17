@@ -3,7 +3,17 @@
     <search-module
       :items="searchItem"
       v-model="searchValues"
-      @search="handleSearch" />
+      :min="min"
+      ref="search"
+      :rules="{ max: [
+            { required: true, message: '请选择活动区域', trigger: 'change' }
+          ] }"
+      :default="searchDefault"
+      @search="handleSearch">
+      <el-button type="success" @click="min=0" slot="btn">展示全部</el-button>
+      <el-button type="success" @click="searchItem[0].show=true" slot="btn">展示被隐藏</el-button>
+      <el-button type="success" @click="handleSaveLocal" slot="btn">本地缓存</el-button>
+    </search-module>
       <p style="margin-top: 10px;">{{ pageData1 }}: {{ pageData2 }}</p>
   </div>
 </template>
@@ -15,7 +25,7 @@ export default {
     return Object.assign(new this.$InitObj({
       items: {
         search: {
-          normal: { label: '一般输入框' },
+          normal: { label: '一般输入框', show: false },
           max: { label: '最大输入值', maxlength: 3 },
           clear: { label: '可清空', clearable: true },
           disable: { label: '禁止输入', disabled: true },
@@ -28,16 +38,33 @@ export default {
         }
       }
     }), {
+      min: 3,
       pageData1: 'searchDemo',
-      pageData2: 'i am test'
+      pageData2: 'i am test',
+      searchDefault: { week: '2020-09-06T16:00:00.000Z', str1: '2020-08-31T16:00:00.000Z', str2: '2020-09-01T16:00:00.000Z' }
     })
+  },
+  created () {
+    this.searchValues = JSON.parse(localStorage.getItem('aaa'))
   },
   methods: {
     handleSearch (val) {
+      this.values = val
       console.log('value:', val)
+      this.$refs.search.$refs.search.validate((valid) => {
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     },
     handleChange (val) {
       this.$setItem(this.searchItem, 3, 'disabled', val === 2)
+    },
+    handleSaveLocal () {
+      localStorage.setItem('aaa', JSON.stringify(this.values))
     }
   }
 }

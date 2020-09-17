@@ -3,6 +3,7 @@
     <!-- 头部按钮 -->
     <slot name="header-btn"></slot>
     <el-table
+      :ref="tableRef"
       :data="tableData"
       :max-height="tableHeight"
       v-loading="loading"
@@ -92,6 +93,10 @@ export default {
     data: {
       type: Array,
       required: true
+    },
+    tableRef: {
+      type: String,
+      default: 'table'
     },
     // 初始化表头映射关系
     items: {
