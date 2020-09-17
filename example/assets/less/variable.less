@@ -1,0 +1,24 @@
+.flex(@direction, @mainAxis, @crossAxis) {
+  display: flex;
+  flex-direction: @direction;
+  justify-content: @mainAxis;
+  align-items: @crossAxis;
+}
+
+.wh(@width, @height) {
+  width: @width;
+  height: @height;
+}
+
+.absolute(@top, @left) {
+  position: absolute;
+  top: @top;
+  left: @left;
+  transform: if((@top = 50% and @left = 50%), translate(-@top, -@left), none); // less函数
+}
+
+.fixed(@top, @left) {
+  position: fixed;
+  top: @top;
+  left: @left;
+}
