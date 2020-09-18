@@ -51,7 +51,8 @@ export default {
   data () {
     return this.handleInit({
       pageData1: 'searchDemo',
-      pageData2: 'i am test'
+      pageData2: 'i am test',
+      rules: {}
     })
   },
   created () {

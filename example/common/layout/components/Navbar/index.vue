@@ -46,29 +46,7 @@ export default {
     return Object.assign({
       userName: '',
       showDialogForm: false,
-      editData: {}
-      // dialogItem: [
-      //   { key: 'password', label: '原密码', type: 'input', show: true },
-      //   { key: 'newPassword', label: '新密码', type: 'password', show: true },
-      //   { key: 'checkNewPassword', label: '确认密码', type: 'password', show: true }
-      // ],
-      // dialogBtn: [
-      //   { name: '取消', type: 'delete', show: true, disabled: false, clickFn: 'btnCancel' },
-      //   { name: '确认', type: 'edit', show: true, color: 'primary', disabled: false, clickFn: 'handleChangePassword' }
-      // ],
-    }, new this.$InitObj({
-      btnConfig: {
-        dialogBtn: [
-          { confirm: { clickFn: 'handleChangePassword' } }, 'cancel'
-        ]
-      },
-      items: {
-        dialog: {
-          password: { label: '原密码' },
-          newPassword: { label: '新密码' },
-          checkNewPassword: { label: '确认密码' }
-        }
-      },
+      editData: {},
       rules: {
         password: [
           { required: true, message: '请输入原密码', trigger: 'blur' }
@@ -79,6 +57,28 @@ export default {
         checkNewPassword: [
           { required: true, message: '请输入确认密码', trigger: 'blur' }
         ]
+      }
+      // dialogItem: [
+      //   { key: 'password', label: '原密码', type: 'input', show: true },
+      //   { key: 'newPassword', label: '新密码', type: 'password', show: true },
+      //   { key: 'checkNewPassword', label: '确认密码', type: 'password', show: true }
+      // ],
+      // dialogBtn: [
+      //   { name: '取消', type: 'delete', show: true, disabled: false, clickFn: 'btnCancel' },
+      //   { name: '确认', type: 'edit', show: true, color: 'primary', disabled: false, clickFn: 'handleChangePassword' }
+      // ],
+    }, new this.$InitObj({
+      btns: {
+        dialog: [
+          { confirm: { clickFn: 'handleChangePassword' } }, 'cancel'
+        ]
+      },
+      items: {
+        dialog: {
+          password: { label: '原密码' },
+          newPassword: { label: '新密码' },
+          checkNewPassword: { label: '确认密码' }
+        }
       }
     }))
   },
