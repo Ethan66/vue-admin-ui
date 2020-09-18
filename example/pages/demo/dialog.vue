@@ -60,7 +60,7 @@ export default {
       this.isEdit = 0
       this.showDialogForm = true
       this.dialogTitle = '新增'
-      this.$set(this.editData, 'position3', [])
+      // this.$set(this.editData, 'position3', [])
     },
     handleEdit () {
       this.isEdit = 1

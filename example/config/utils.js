@@ -79,7 +79,7 @@ export const handleChangePage = function (currentPage) {
 export const apiCreateData = function (createDataApi, obj, getTableDataApi = this.getTableDataApi) {
   createDataApi(obj).then(res => {
     if (res.code === '000000') {
-      this.$refs.dialog && (this.$refs.dialog.showDialog1 = false)
+      this.$refs.dialog && (this.showDialogForm = false)
       getSuccessMsg(res.msg)
       getTableDataApi && handleGetTableData.call(this, getTableDataApi)
     } else {
@@ -92,7 +92,7 @@ export const apiCreateData = function (createDataApi, obj, getTableDataApi = thi
 export const apiEditData = function (editDataApi, obj, getTableDataApi = this.getTableDataApi) {
   editDataApi(obj).then(res => {
     if (res.code === '000000') {
-      this.$refs.dialog && (this.$refs.dialog.showDialog1 = false)
+      this.showDialogForm = false
       getSuccessMsg(res.msg)
       getTableDataApi && handleGetTableData(this, getTableDataApi)
     } else {
