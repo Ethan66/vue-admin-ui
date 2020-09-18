@@ -94,7 +94,7 @@ export const apiEditData = function (editDataApi, obj, getTableDataApi = this.ge
     if (res.code === '000000') {
       this.showDialogForm = false
       getSuccessMsg(res.msg)
-      getTableDataApi && handleGetTableData(this, getTableDataApi)
+      getTableDataApi && handleGetTableData.call(this, getTableDataApi)
     } else {
       Message.error(res.msg)
     }
