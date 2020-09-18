@@ -1,11 +1,11 @@
 <template>
    <span
       :class="[handleSetStatusClsName(item.clsName || '', row[item.prop]), { canClick: item.clickFn !== undefined }]"
-      @click="handleCellClick(item.clickFn, scope.row)"
+      @click="handleCellClick(item.clickFn, row)"
     >
       <i :class="handleSetStatusClsName(item.clsName || '', row[item.prop], 'i')"></i>
-      <template v-if="item.formatterFn">{{ item.formatterFn(row[item.prop]) }}</template>
-      <template v-else>{{ scope.row[item.prop] }}</template>
+      <template v-if="item.formatter">{{ item.formatter(undefined, undefined, row[item.prop]) }}</template>
+      <template v-else>{{ row[item.prop] }}</template>
     </span>
 </template>
 

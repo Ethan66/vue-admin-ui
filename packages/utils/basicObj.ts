@@ -15,77 +15,74 @@ interface IdefaultDialogBtn {
 }
 
 interface Ioptions {
-  btnConfig: {
-    dialogBtn?: (string | { [key: number]: object })[]
+  btns?: {
+    dialog?: (string | { [key: number]: object })[]
+    [key: string]: (string | { [key: number]: object })[]
   }
   items: {
     search?: { [key: string]: string | object }
-    table?:  { [key: string]: string | object }
-    dialog?:  { [key: string]: string | object }
+    table?: { [key: string]: string | object }
+    dialog?: { [key: string]: string | object }
+    [key: string]: { [key: string]: string | object }
   }
-  rules?:  { [key: string]: object }
 }
 
-const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: IdefaultDialogBtn }): Function {
+const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultDialogBtn }): Function {
   class InitObj {
     searchItem: []
     searchValues: object
     
-    allData: []
     tableData: []
     tableItem: []
     tableLoading: boolean
     isEdit: number
     tablePages: { total: number, current: number, pageSize: number }
-    chooseDataArr: []
+    tablechooseArr: []
     
     editData: object
     dialogTitle: string
     dialogItem: []
     dialogBtn: []
     showDialogForm: boolean
-    rules: {}
+    [key: string]: [] | object | string | boolean | number
 
     constructor (options: Ioptions) {
       const modules: string[] = Object.keys(options.items) as string[]
       modules.forEach((module) => {
-        switch (module) {
-          case 'search':
-            this.initSearchObj()
-            break
-          case 'table':
-            this.initTableObj()
-            break
-          case 'dialog':
-            this.initDialogObj(options.btnConfig && options.btnConfig.dialogBtn)
+        if (/search/.test(module)) {
+          this.initSearch(module)
+        }
+        if (/table/.test(module)) {
+          this.initTable(module)
+        }
+        if (/dialog/.test(module)) {
+          this.initDialog(module, options.btns && options.btns[module])
         }
       })
       this.initItem(options.items, modules)
-      options.rules && (this.rules = options.rules)
       return this
     }
 
-    initSearchObj (): void {
-      this.searchItem = []
-      this.searchValues = {}
+    initSearch (module: string): void {
+      this[`${module}Item`] = []
+      this[`${module}Values`] = {}
     }
-    initTableObj (): void {
-      this.allData = []
-      this.tableData = []
-      this.tableItem = []
-      this.tableLoading = true
+    initTable (module: string): void {
+      this[`${module}Data`] = []
+      this[`${module}Item`] = []
+      this[`${module}Loading`] = true
       this.isEdit = 0
-      this.tablePages = { total: 0, current: 1, pageSize: 20 }
-      this.chooseDataArr = []
+      this[`${module}Pages`] = { total: 0, current: 1, pageSize: 20 }
+      this[`${module}chooseArr`] = []
     }
-    initDialogObj (dialogBtn: object = ['cancel', 'confirm']) {
+    initDialog (module: string, dialogBtn: (string | { [key: number]: object })[] = ['cancel', 'confirm']) {
       this.editData = {}
       this.dialogTitle = ''
-      this.dialogItem = []
-      this.dialogBtn = []
       this.showDialogForm = false
-      this.rules = {}
-      this.setBtn(dialogBtn, 'dialogBtn')
+      this.allRead = false
+      this[`${module}Item`] = []
+      this[`${module}Btn`] = []
+      this.setBtn(dialogBtn, `${module}Btn`)
     }
 
     setBtn (config, type) {
@@ -94,14 +91,14 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
         console.error('传参必须为数组')
         return false
       }
-      let basicConfig = defaultDialogBtn
+      let basicConfig = defDialogBtn ? defDialogBtn.defaultDialogBtn : []
       config.forEach(key => {
         if (typeof key === 'string') {
           if (!basicConfig[key]) {
-            console.error(`请确认${type}是否配置了${key}属性`)
+            console.error(`请确认默认对话框按钮是否配置了${key}属性`)
             return false
           }
-          this[type].push(basicConfig[key])
+          (this[type] as object[]).push(basicConfig[key])
         } else if (key.constructor === Object) {
           let arr = Object.entries(key)[0]
           if (arr[1].constructor !== Object) {
@@ -115,7 +112,7 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
             }
             config.name = (this.authBtn(config.code, userBtnList) as string)
           }
-          this[type].push(config)
+          (this[type] as object[]).push(config)
         } else {
           console.error('数组里的数据必须是字符串或对象')
         }
@@ -135,9 +132,15 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
         let configObj = items[module]
         let keys = Object.keys(configObj)
         let result = []
+        let tmp = module.match(/(search|table|dialog)/)
+        const type = tmp && tmp[0]
+        if (!type) {
+          console.error('请确认items配置项中key包含search、table、dialog其中一个')
+          return
+        }
         keys.forEach(key => {
-          let obj = configObj[key] = Object.assign({}, basicConfig[module], configObj[key])
-          if (module === 'table') {
+          let obj = configObj[key] = Object.assign({}, basicConfig[type], configObj[key])
+          if (type === 'table') {
             if (key === 'btn') {
               obj.type = 'btn'
               !obj.label && (obj.label = '操作')
@@ -149,7 +152,7 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
               obj.prop = key
             }
           } else {
-            if (module === 'search' && configObj[key].key) {
+            if (type === 'search' && configObj[key].key) {
               obj.key = configObj[key].key
             } else {
               obj.key = key
@@ -157,7 +160,7 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
             let prefix = placeholderList.includes(obj.type) ? '请输入' : '请选择'
             obj.placeholder = `${prefix}${obj.label}`
           }
-          if (module === 'search' || module === 'dialog') {
+          if (type === 'search' || type === 'dialog') {
             let tmp = {}
             externalKeys.forEach(str => {
               obj[str] !== undefined && (tmp[str] = obj[str])
@@ -181,11 +184,11 @@ const onCreateBasicData = function ({ defaultDialogBtn }: { defaultDialogBtn: Id
 
      // 表格数据转换
     formmater (config) {
-      return function (val) {
-        if (config.constructor === Array && !(Number(val) === 0 || Number(val))) {
+      return function (row, column, cellValue) {
+        if (config.constructor === Array && !(Number(cellValue) === 0 || Number(cellValue))) {
           throw new Error('当config为Array时，val必须为Number')
         }
-        return config[val]
+        return config[cellValue]
       }
     }
 

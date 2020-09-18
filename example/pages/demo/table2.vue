@@ -28,10 +28,10 @@
     </table-module>
     <table-module
       ref="table2"
-      :loading="tableLoading2"
-      :data="tableData2"
-      :items="tableItem2"
-      :page="tablePages2"
+      :loading="table2Loading"
+      :data="table2Data"
+      :items="table2Item"
+      :page="table2Pages"
       @jump="handleChangePage2"
       @selection-change="handleSelectChange"
     >
@@ -67,27 +67,24 @@ export default {
       items: {
         table: {
           selection: { selectable: (row, index) => index !== 2 },
-          account: { label: '账号', width: 100, show: false },
+          account: { label: '账号', width: 100, show: true },
           name: { label: '用户名' },
           roleName: { label: '角色', width: 100 },
-          status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatterFn: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
+          status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatter: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
           loginTime: { label: '最近登录', width: 120 },
           operator: { label: '操作人', width: 100 },
           btn: { width: 118, slot: 'btn' }
-        }
-      }
-    }), this.$setMoreItems(['tableData2', 'chooseDataArr2', 'isEdit2', 'tableItem2', 'tableLoading2', 'tablePages2'], new this.$InitObj({
-      items: {
-        table: {
+        },
+        table2: {
           selection: '',
           account: { label: '账号', width: 100 },
           roleName: { label: '角色', width: 100 },
-          loginTime: { label: '最近登录', width: 120 },
+          loginTime: { label: '最近登录', width: 120, show: false },
           operator: { label: '操作人', width: 100 },
           btn: { width: 118, slot: 'btn' }
         }
       }
-    })))
+    }))
   },
   created () {
     this.tableBtn = this.$getAuthBtns([
@@ -112,15 +109,15 @@ export default {
       apiGetUser(params).then(res => {
         if (res.code === '000000') {
           const { list, page } = res.data
-          this.tableData2 = this.tableData = this.allData = list
+          this.table2Data = this.tableData = this.allData = list
           if (page) {
             this.tablePages.current = page.currentPage
             this.tablePages.total = page.total
-            this.tablePages2.current = page.currentPage
-            this.tablePages2.total = page.total
+            this.table2Pages.current = page.currentPage
+            this.table2Pages.total = page.total
           }
           this.tableLoading = false
-          this.tableLoading2 = false
+          this.table2Loading = false
         } else {
           this.$message.error(res.msg)
         }

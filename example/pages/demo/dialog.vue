@@ -27,7 +27,7 @@ export default {
         dialog: {
           account: { label: '账号' },
           password: { label: '密码', disabled: true },
-          delivery: { label: '开关', slot: 'switch' },
+          delivery: { label: '开关', type: 'switch' },
           textarea: { label: '文本', slot: 'textarea' },
           position: { label: '职位', type: 'select', options: [{ label: '前端', value: '1' }, { label: '运营', value: '2' }] },
           roleId: { label: '角色', type: 'select', multiple: true, options: [{ label: '超级管理员', value: '1' }, { label: '管理员', value: '2' }, { label: '技术', value: '3' }] },
@@ -41,7 +41,6 @@ export default {
         }
       }
     }), {
-      allRead: false,
       rules: {
         account: [
           { required: true, trigger: 'blur', message: '请填写账号' }

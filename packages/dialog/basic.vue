@@ -76,12 +76,23 @@ export default {
           {this.config.options.map((item, index) => <el-checkbox label={item.value} key={index}>{item.label}</el-checkbox>)}
         </el-checkbox-group>
       )
+    } else if (type === 'switch') {
+      return (
+        <el-switch
+          v-model={result[key]}
+          disabled={$attr.disabled || allRead}
+          {...{ attrs: $attr }}
+          {...{ on: $on }}
+        >
+        </el-switch>
+      )
     } else if (this.dateTypeList.includes(type)) {
       return (
         <el-col>
           <el-date-picker
             type={type}
             v-model={result[key]}
+            disabled={$attr.disabled || allRead}
             {...{ attrs: $attr }}
             { ...{ on: $on } }
             style="width: 100%;"></el-date-picker>

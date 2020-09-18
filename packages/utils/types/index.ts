@@ -66,7 +66,7 @@ interface BasicObj {
    * @param defaultDialogBtn 初始化dialog的btn
    *
    */
-  onCreateBasicData: ({ defaultDialogBtn }: { defaultDialogBtn: IdefaultDialogBtn }) => Function;
+  onCreateBasicData: (defDialogBtn?: { defaultDialogBtn: IdefaultDialogBtn }) => Function;
 }
 
 export interface Types extends Methods, BasicObj {}
