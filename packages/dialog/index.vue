@@ -78,23 +78,36 @@ export default {
       dateTypeList: ['year', 'month', 'date', 'dates', 'week', 'datetime', 'datetimerange', 'daterange', 'monthrange'], // ele-date默认type类型
       chineseTybe: 0,
       showDialog1: false,
-      oldEditData: null
+      dialogItem: []
     }
   },
   watch: {
+    items: {
+      handler (val) {
+        this.dialogItem = val.filter(item => item.show)
+        this.dialogItem.forEach(item => {
+          if (item.label.length > this.chineseTybe) {
+            this.chineseTybe = item.label.length
+          }
+          if (['checkbox'].includes(item.type)) {
+            this.data[item.key] = []
+          }
+        })
+      },
+      immediate: true
+    },
     showDialog (val) {
       if (val === true) {
         this.showDialog1 = true
-        this.oldEditData = JSON.parse(JSON.stringify(this.data))
+      } else {
+        this.$nextTick(() => {
+          this.$refs.form && this.$refs.form.resetFields()
+        })
+        this.showDialog1 = false
       }
     },
     showDialog1 (val) {
-      if (val === false) {
-        this.$nextTick(() => {
-          this.$refs.form.resetFields()
-        })
-        this.$emit('update:showDialog', false)
-      }
+      this.$emit('update:showDialog', val)
     }
   },
   computed: {
@@ -107,24 +120,12 @@ export default {
         if (i === 5) break
       }
       return parent
-    },
-    dialogItem () {
-      return this.items.filter(item => item.show)
     }
-  },
-  created () {
-    this.dialogItem.forEach(item => {
-      if (item.label.length > this.chineseTybe) {
-        this.chineseTybe = item.label.length
-      }
-    })
-    // this.$setItem(this.items, 'dialog')
   },
   methods: {
     onClass (span = 24, type) {
-      if (this.doubleColumn) span = 12
-      if (this.doubleColumn && type === 'textarea') span = 24
-      return ['width', `width${span}`]
+      if (this.doubleColumn && type !== 'textarea') span = 12
+      return [`el-col-${span}`]
     },
     // 点击按钮事件
     onFn (type, clickFn = '') {
@@ -137,32 +138,22 @@ export default {
           return true
         }
       } else if (type === 'edit') {
-        if (this.allRead) {
+        if (this.allRead || clickFn === '') {
           this.showDialog1 = false
           return false
         }
-        if (this.onConfirmEdit('form') === false) return false
-        if (clickFn === '') {
-          this.showDialog1 = false
-          return true
-        }
+        if (!this.onConfirmEdit('form')) return false
         this.parent[clickFn]()
       }
     },
     // 点击确认时校验
     onConfirmEdit (formName) {
-      if (JSON.stringify(this.oldEditData) === JSON.stringify(this.data)) {
-        this.$message.error('您未修改或添加任何数据')
-        return false
-      }
       // 校验规则
-      let result
+      let result = true
       this.$refs[formName].validate((valid) => {
         if (!valid) {
           result = false
-          return false
         }
-        result = true
       })
       if (result === false) return false
       return true

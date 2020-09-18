@@ -27,7 +27,7 @@
           </template>
         </template>
       <el-form-item class="noMarginBottom">
-        <el-button type="primary" icon="el-icon-search" @click.native.prevent="onSearch()" v-if="showQuery">{{ queryName }}</el-button>
+        <el-button type="primary" icon="el-icon-search" @click.native.prevent="onSearch()" v-if="showQuery">查询</el-button>
         <el-button type="danger" icon="el-icon-delete" @click.native.prevent="onClear()" v-if="showReset">重置</el-button>
         <slot name="btn"></slot>
       </el-form-item>
@@ -51,10 +51,6 @@ export default {
     value: {
       type: Object,
       required: true
-    },
-    queryName: {
-      type: String,
-      default: '查询'
     },
     // 是否展示重置
     showReset: {
