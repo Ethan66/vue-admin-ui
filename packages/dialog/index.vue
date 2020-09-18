@@ -14,7 +14,7 @@
           </el-form-item>
           <template v-else>
             <el-form-item
-              v-if="['text', 'number', 'radio', 'checkbox', 'textarea', 'select', ...dateTypeList].includes(item.type) && item.show"
+              v-if="['text', 'number', 'switch', 'radio', 'checkbox', 'textarea', 'select', ...dateTypeList].includes(item.type) && item.show"
               :class="['label' + chineseTybe, { radio: ['radio'].includes(item.type) }]"
               :label="item.label"
               :prop="item.key"
@@ -90,7 +90,7 @@ export default {
             this.chineseTybe = item.label.length
           }
           if (['checkbox'].includes(item.type)) {
-            this.data[item.key] = []
+            this.$set(this.data, item.key, [])
           }
         })
       },
