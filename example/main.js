@@ -10,7 +10,7 @@ import '@/assets/less/index.less'
 import systemObj from '@/config/system'
 import { authBtns } from '@/config/permission'
 import { dialogBtn } from '@/config/defaultBtnData'
-import { purifyParams, setMoreItems, handleSearch, handleChangePage, apiCreateData, apiEditData, apiDeleteData, handleGetTableData } from '@/config/utils'
+import { purifyParams, handleSearch, handleChangePage, apiCreateData, apiEditData, apiDeleteData, handleGetTableData } from '@/config/utils'
 import '$pkg/style/dialog.less'
 import '$pkg/style/search.less'
 import '$pkg/style/table.less'
@@ -44,7 +44,6 @@ Vue.prototype.$purifyParams = purifyParams
 Vue.prototype.$format = formatDate
 Vue.prototype.$getBtnName = authBtns.getBtnName.bind(authBtns)
 Vue.prototype.$getAuthBtns = authBtns.getConfigBtns.bind(authBtns)
-Vue.prototype.$setMoreItems = setMoreItems
 Vue.prototype.$systemObj = systemObj
 Vue.prototype.$InitObj = adminUtils.onCreateBasicData({ defaultDialogBtn: dialogBtn })
 Vue.prototype.$setItem = adminUtils.setItemProp

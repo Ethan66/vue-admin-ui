@@ -25,22 +25,6 @@ export const purifyParams = (params) => {
   return result
 }
 
-export const setMoreItems = (keys, config) => {
-  if (!Array.isArray(keys) && typeof keys !== 'string') {
-    console.error('setMoreItems的keys类型不正确')
-    return true
-  }
-  const result = {}
-  keys.toString().split(',').forEach((key, i) => {
-    let tmp = key.match(/^([^\d]+)([\d]+)$/)
-    if (tmp === null) {
-      throw new Error('setMoreItems的keys格式不正确')
-    }
-    result[key] = config[tmp[1]]
-  })
-  return result
-}
-
 // 点击搜索按钮
 export const handleSearch = function (val) {
   this.queryData = val
