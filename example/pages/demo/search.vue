@@ -45,7 +45,7 @@ export default {
     })
   },
   created () {
-    this.searchValues = JSON.parse(localStorage.getItem('aaa'))
+    this.searchValues = JSON.parse(localStorage.getItem('aaa')) || {}
   },
   methods: {
     handleSearch (val) {
