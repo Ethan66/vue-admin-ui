@@ -152,6 +152,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
               obj.prop = key
             }
           } else {
+            if (type === 'search') this[`${module}Values`][key] = undefined
             if (type === 'search' && configObj[key].key) {
               obj.key = configObj[key].key
             } else {
