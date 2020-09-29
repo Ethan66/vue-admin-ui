@@ -6,16 +6,12 @@
 ```html
 <template>
   <div>
-    <search-module :items="searchItem" v-model="searchValues" @search="onSearch"></search-module>
+    <search-module :items="searchItem" v-model="searchValues" @search="onSearch" />
   </div>
 </template>
 <script>
   import { adminMethods } from 'vue-admin-ui-lib'
-  const dialogBtn = {
-  cancel: { name: '取消', type: 'delete', clickFn: '', disabled: false, show: true },
-  confirm: { name: '确认', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false, show: true }
-}
-  const InitObj = adminMethods.onCreateBasicData({ defaultDialogBtn: dialogBtn })
+  const InitObj = adminMethods.onCreateBasicData()
   export default {
     data () {
       return new InitObj({
@@ -43,16 +39,12 @@
 ```html
 <template>
   <div>
-    <search-module :items="searchItem" v-model="searchValues" @search="onSearch"></search-module>
+    <search-module :items="searchItem" v-model="searchValues" @search="onSearch" />
   </div>
 </template>
 <script>
   import { adminMethods } from 'vue-admin-ui-lib'
-  const dialogBtn = {
-  cancel: { name: '取消', type: 'delete', clickFn: '', disabled: false, show: true },
-  confirm: { name: '确认', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false, show: true }
-}
-  const InitObj = adminMethods.onCreateBasicData({ defaultDialogBtn: dialogBtn })
+  const InitObj = adminMethods.onCreateBasicData()
   export default {
     data () {
       return new InitObj({
@@ -77,16 +69,12 @@
 ```html
 <template>
   <div>
-    <search-module :items="searchItem" v-model="searchValues" @search="onSearch"></search-module>
+    <search-module :items="searchItem" v-model="searchValues" @search="onSearch" />
   </div>
 </template>
 <script>
   import { adminMethods } from 'vue-admin-ui-lib'
-  const dialogBtn = {
-  cancel: { name: '取消', type: 'delete', clickFn: '', disabled: false, show: true },
-  confirm: { name: '确认', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false, show: true }
-}
-  const InitObj = adminMethods.onCreateBasicData({ defaultDialogBtn: dialogBtn })
+  const InitObj = adminMethods.onCreateBasicData()
   export default {
     data () {
       return new InitObj({
@@ -114,16 +102,12 @@
 ```html
 <template>
   <div>
-    <search-module :items="searchItem" v-model="searchValues" @search="onSearch"></search-module>
+    <search-module :items="searchItem" v-model="searchValues" @search="onSearch" />
   </div>
 </template>
 <script>
   import { adminMethods } from 'vue-admin-ui-lib'
-  const dialogBtn = {
-  cancel: { name: '取消', type: 'delete', clickFn: '', disabled: false, show: true },
-  confirm: { name: '确认', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false, show: true }
-}
-  const InitObj = adminMethods.onCreateBasicData({ defaultDialogBtn: dialogBtn })
+  const InitObj = adminMethods.onCreateBasicData()
   export default {
     data () {
       return new InitObj({
@@ -138,6 +122,192 @@
     methods: {
       onSearch (val) { alert(JSON.stringify(val)) },
       onChange (val) { this.searchItem[0].$attr.disabled = val === 2 }
+    }
+  }
+</script>
+```
+:::
+
+### 个数展示控制
+
+:::demo [min]() 控制展示个数，[min=0]() 表示展示全部
+```html
+<template>
+  <div>
+    <search-module min="1" :items="searchItem" v-model="searchValues" @search="onSearch" />
+  </div>
+</template>
+<script>
+  import { adminMethods } from 'vue-admin-ui-lib'
+  const InitObj = adminMethods.onCreateBasicData()
+  export default {
+    data () {
+      return new InitObj({
+        items: {
+          search: {
+            basic: { label: '基础' },
+            disable: { label: '禁用' },
+            icon: { label: 'icon', 'suffix-icon': 'el-icon-date' }
+          }
+        }
+      })
+    },
+    methods: {
+      onSearch (val) {
+        alert(JSON.stringify(val))
+      }
+    }
+  }
+</script>
+```
+:::
+
+### 默认值
+
+:::demo [default]() 传入默认值
+```html
+<template>
+  <div>
+    <search-module :items="searchItem" v-model="searchValues" :default="defaultObj" @search="onSearch" />
+  </div>
+</template>
+<script>
+  import { adminMethods } from 'vue-admin-ui-lib'
+  const InitObj = adminMethods.onCreateBasicData()
+  export default {
+    data () {
+      return Object.assign(new InitObj({
+        items: {
+          search: {
+            basic: { label: '基础' },
+            disable: { label: '禁用' },
+            icon: { label: 'icon', 'suffix-icon': 'el-icon-date' }
+          }
+        }
+      }), {
+        defaultObj: { basic: '我是默认基础', disable: '我是默认禁用' }
+      })
+    },
+    methods: {
+      onSearch (val) {
+        alert(JSON.stringify(val))
+      }
+    }
+  }
+</script>
+```
+:::
+
+### 个性化按钮和标题
+
+:::demo [showQuery]() 控制查询按钮展示，[showReset]() 控制重置按钮展示，[slot=header]() 个性化控制标题，[slot=btn]() 个性化按钮
+```html
+<template>
+  <div>
+    <search-module :items="searchItem" v-model="searchValues" :showReset="false" :showQuery="false" @search="onSearch">
+      <h3 slot="header">我的标题</h3>
+      <el-button slot="btn" type="primary" icon="el-icon-search">分配</el-button>
+    </search-module>
+  </div>
+</template>
+<script>
+  import { adminMethods } from 'vue-admin-ui-lib'
+  const InitObj = adminMethods.onCreateBasicData()
+  export default {
+    data () {
+      return new InitObj({
+        items: {
+          search: {
+            basic: { label: '基础' },
+            disable: { label: '禁用' },
+            icon: { label: 'icon', 'suffix-icon': 'el-icon-date' }
+          }
+        }
+      })
+    },
+    methods: {
+      onSearch (val) {
+        alert(JSON.stringify(val))
+      }
+    }
+  }
+</script>
+```
+:::
+
+### 只输入数字
+
+:::demo 通过[input]() 方法进行校验
+```html
+<template>
+  <div>
+    <search-module :items="searchItem" v-model="searchValues" @search="onSearch" />
+  </div>
+</template>
+<script>
+  import { adminMethods } from 'vue-admin-ui-lib'
+  const InitObj = adminMethods.onCreateBasicData()
+  export default {
+    data () {
+      return new InitObj({
+        items: {
+          search: {
+            basic: { label: '数字', input: this.input }
+          }
+        }
+      })
+    },
+    methods: {
+      input () {
+        this.$nextTick(() => {
+          this.searchValues.basic = this.searchValues.basic.replace(/[^\d]/g, '')
+        })
+      },
+      onSearch (val) {
+        alert(JSON.stringify(val))
+      }
+    }
+  }
+</script>
+```
+:::
+
+### rules 规则校验
+
+:::demo [rules]() 配置规则
+```html
+<template>
+  <div>
+    <search-module ref="search" :items="searchItem" v-model="searchValues" :rules="rules" @search="onSearch" />
+  </div>
+</template>
+<script>
+  import { adminMethods } from 'vue-admin-ui-lib'
+  const InitObj = adminMethods.onCreateBasicData()
+  export default {
+    data () {
+      return Object.assign(new InitObj({
+        items: {
+          search: {
+            basic: { label: '基础' },
+            disable: { label: '禁用' },
+            icon: { label: 'icon', 'suffix-icon': 'el-icon-date' }
+          }
+        }
+      }), {
+        rules: {
+          basic: [{ required: true, message: '请输入内容', trigger: 'blur' }]
+        }
+      })
+    },
+    methods: {
+      onSearch (val) {
+        this.$refs.search.$refs.search.validate(valid => {
+          if (valid) {
+            alert(JSON.stringify(val))
+          }
+        })
+      }
     }
   }
 </script>
@@ -165,11 +335,7 @@
 </template>
 <script>
   import { adminMethods } from 'vue-admin-ui-lib'
-  const dialogBtn = {
-  cancel: { name: '取消', type: 'delete', clickFn: '', disabled: false, show: true },
-  confirm: { name: '确认', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false, show: true }
-}
-  const InitObj = adminMethods.onCreateBasicData({ defaultDialogBtn: dialogBtn })
+  const InitObj = adminMethods.onCreateBasicData()
   export default {
     data () {
       return Object.assign(new InitObj({
@@ -195,3 +361,13 @@
 </script>
 ```
 :::
+
+### 参数列表
+|参数|说明|类型|默认值|
+|:--:|:--:|:--:|:--:|
+|lable|标签|string|——|
+|maxlength|最大可输入|number|——|
+|clearabled|是否可清除|boolean|false|
+|disabled|禁用|boolean|false|
+||||——|
+||||——|

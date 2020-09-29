@@ -74,6 +74,6 @@
     "vue-admin-methods": "^1.0.38",
     "vue-router": "^3.1.6",
     "vuex": "^3.4.0",
-    "vue-admin-ui-lib": "^1.0.24"
+    "vue-admin-ui-lib": "^1.0.27"
   }
 }
