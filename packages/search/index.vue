@@ -26,7 +26,7 @@
             </el-form-item>
           </template>
         </template>
-      <el-form-item class="noMarginBottom">
+      <el-form-item :class="{ noMarginBottom: !sameLine }">
         <el-button type="primary" icon="el-icon-search" @click.native.prevent="onSearch()" v-if="showQuery">查询</el-button>
         <el-button type="danger" icon="el-icon-delete" @click.native.prevent="onClear()" v-if="showReset">重置</el-button>
         <slot name="btn"></slot>
@@ -52,6 +52,7 @@ export default {
       type: Object,
       required: true
     },
+    sameLine: Boolean,
     // 是否展示重置
     showReset: {
       type: Boolean,
