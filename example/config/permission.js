@@ -1,6 +1,7 @@
 import { adminMethods } from 'vue-admin-ui-lib'
 import { handleGetMenuRoutes } from '@/router/methods'
 import configRoutes from '@/router/configRoutes'
+import Vue from 'vue'
 
 export default class Permission {
   constructor (options) {
@@ -83,6 +84,7 @@ class BtnList {
   // 重新设置btnList
   setBtnList (btnList) {
     this.btnList = btnList // 刷新更新，不取本地
+    Vue.$InitObj.btnList = btnList
     sessionStorage.setItem('btnList', JSON.stringify(btnList || []))
   }
 

@@ -11,7 +11,7 @@ module.exports = {
     path: resolve('/lib/utils/'),
     filename: 'index.js',
     library: 'vueAdminMethods',
-    libraryTarget: 'umd'
+    libraryTarget: 'commonjs-module'
   },
   resolve: {
     extensions: ['.js', '.ts']

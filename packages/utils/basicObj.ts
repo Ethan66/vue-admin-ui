@@ -45,6 +45,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
     dialogBtn: []
     showDialogForm: boolean
     [key: string]: [] | object | string | boolean | number
+    static btnList: []
 
     constructor (options: Ioptions) {
       const modules: string[] = Object.keys(options.items) as string[]
@@ -86,7 +87,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
     }
 
     setBtn (config, type) {
-      const userBtnList = JSON.parse(sessionStorage.getItem('btnList'))
+      const userBtnList = InitObj.btnList
       if (!Array.isArray(config)) {
         console.error('传参必须为数组')
         return false
@@ -106,7 +107,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
             return false
           }
           let config = Object.assign({}, basicConfig[arr[0]], arr[1])
-          if (config.code) {
+          if (config.code && userBtnList.length) {
             if ((arr[1] as { show?: boolean, [key: string]: any }).show === undefined) {
               config.show = (this.authBtn(config.code, userBtnList, 'show') as boolean)
             }
@@ -195,15 +196,6 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
 
     // 根据btnCode获取按钮权限和名字
     authBtn (btnCode, userBtnList: any[], type?: string) {
-      // let userBtnList: { btnCode: string, btnName: string }[] = []
-      // userBtnList.length === 0 && (userBtnList = JSON.parse(sessionStorage.getItem('btnList')))
-      if (!userBtnList) {
-        throw new Error('btn权限需要存储在sessionStorage')
-      }
-      // if (window.btnList) { // 刷新页面的window.btnList保存的是最新的按钮权限
-      //   this.userBtnList = window.btnList
-      //   window.btnList = undefined
-      // }
       let obj = userBtnList.find(item => item.btnCode === btnCode)
       if (obj) {
         if (type) {

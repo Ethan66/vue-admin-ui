@@ -29,7 +29,7 @@ export default {
           max: { label: '最大输入值', maxlength: 3 },
           clear: { label: '可清空', clearable: true },
           disable: { label: '禁止输入', disabled: true },
-          listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
+          listen: { label: '监听改变', type: 'select', options: [], change: this.handleChange },
           'str1,str2': { label: '时间', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' },
           date: { label: '时间', type: 'date' },
           week: { label: '周', type: 'week', format: 'yyyy 第 WW 周' },
@@ -38,13 +38,14 @@ export default {
         }
       }
     }), {
-      min: 3,
+      min: 0,
       pageData1: 'searchDemo',
       pageData2: 'i am test',
       searchDefault: { week: '2020-09-06T16:00:00.000Z', str1: '2020-08-31T16:00:00.000Z', str2: '2020-09-01T16:00:00.000Z' }
     })
   },
   created () {
+    this.searchItem[4].options = [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }]
     this.searchValues = JSON.parse(localStorage.getItem('aaa')) || {}
   },
   methods: {

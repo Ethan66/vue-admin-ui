@@ -1,6 +1,6 @@
 {
   "name": "vue-admin-ui-lib",
-  "version": "1.0.28",
+  "version": "1.0.30",
   "description": "",
   "main": "lib/index.js",
   "style": "lib/style/index.css",
@@ -62,8 +62,8 @@
     "mobile-detect": "^1.4.4",
     "nprogress": "^0.2.0",
     "store": "^2.0.12",
-    "vue": "^2.6.12",
-    "vue-admin-methods": "^1.0.38",
+    "vue": "^2.6.11",
+    "vue-admin-methods": "^1.0.40",
     "vue-admin-ui-lib": "^1.0.24",
     "vue-router": "^3.1.6",
     "vuex": "^3.4.0"
