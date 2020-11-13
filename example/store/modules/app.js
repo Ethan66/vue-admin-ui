@@ -1,12 +1,14 @@
 import { apiGetUserAuthMenu } from '@/api/login'
 import systemObj from '@/config/system'
 import Permission, { authBtns } from '@/config/permission'
+import Cookies from 'js-cookie'
 
 const app = {
   state: {
     sidebar: {
       opened: true
     },
+    userInfo: JSON.parse(Cookies.get('userInfo') || '{}'),
     menuList: [], // 刷新更新，不取本地
     mainTabs: [], // 刷新可本地获取或不取
     mainActivedTab: {}, // 刷新从本地获取
@@ -24,6 +26,10 @@ const app = {
     UPDATE_BTNLIST: (state, val = []) => {
       state.btnList = val
       sessionStorage.setItem('btnList', JSON.stringify(val))
+    },
+    UPDATE_USERINFO: (state, val) => {
+      state.userInfo = val
+      Cookies.set('userInfo', JSON.stringify(val), { expires: 24 * 60 * 60 * 1000 })
     },
     UPDATE_MAINTABS: (state, val = []) => {
       state.mainTabs = val

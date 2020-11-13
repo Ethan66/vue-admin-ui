@@ -24,7 +24,6 @@ const router = new Router({
       return { x: 0, y: 0 }
     }
   },
-  isAddDynamicRoutes: false, // 记录是否已加载动态路由
   routes: [...globalRoutes, ...configRoutes]
 })
 
@@ -33,14 +32,15 @@ NProgress.configure({ showSpinner: false })
 router.beforeEach(async (to, from, next) => {
   NProgress.start()
   let toPath = ''
-  if (!localStorage.getItem('userInfo')) {
+  // if () {}
+  if (!store.getters.userInfo) {
     if (to.path !== '/login') {
       toPath = `/login?redirect=${to.path}`
     }
   }
-  // 是否已加载路由或访问的是全局路由不用请求路由接口, firstLogin表示退出重新登录
+  // 是否已加载路由或访问的是全局路由不用请求路由接口
   if ((store.getters.isAddDynamicRoutes || handleNowRouteType(to, globalRoutes) === 'global')) {
-    document.title = to.meta.title ? to.meta.title : '首页'
+    document.title = to.meta.title
     !toPath ? next() : next({ path: toPath })
   } else {
     // 后台请求菜单列表

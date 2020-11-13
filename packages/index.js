@@ -1,4 +1,4 @@
-import adminMethods from './utils/index'
+import adminMethods from './utils/index.ts'
 import searchModule from './search'
 import tableModule from './table'
 import dialogModule from './dialog'

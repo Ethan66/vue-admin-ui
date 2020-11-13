@@ -90,11 +90,11 @@ export default {
   },
   computed: {
     mainTabs: {
-      get () { return this.$store.state.app.mainTabs },
+      get () { return this.$store.getters.mainTabs },
       set (val) { this.$store.commit('UPDATE_MAINTABS', val) }
     },
     mainActivedTab: {
-      get () { return this.$store.state.app.mainActivedTab },
+      get () { return this.$store.getters.mainActivedTab },
       set (val) { this.$store.commit('UPDATE_MINACTIVEDTAB', val) }
     },
     currentUrl: {
@@ -104,7 +104,7 @@ export default {
     ...mapGetters(['subTabObj'])
   },
   created () {
-    this.userName = JSON.parse(localStorage.getItem('userInfo')).userName
+    this.userName = this.$store.getters.userInfo.userName
     if (!this.mainActivedTab.name) {
       this.mainActivedTab = JSON.parse(sessionStorage.getItem('mainActivedTab')) || {}
       this.mainTabs = this.mainActivedTab.name ? [].concat(this.mainActivedTab) : []

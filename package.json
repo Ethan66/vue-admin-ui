@@ -58,6 +58,7 @@
     "@babel/runtime": "^7.9.6",
     "axios": "^0.19.2",
     "element-ui": "^2.13.2",
+    "js-cookie": "^2.2.1",
     "js-md5": "^0.7.3",
     "mobile-detect": "^1.4.4",
     "nprogress": "^0.2.0",

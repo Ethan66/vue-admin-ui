@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
+import Cookies from 'js-cookie'
 axios.defaults.timeout = 50000
 
 // 添加请求拦截器
 axios.interceptors.request.use(config => {
-  const headParams = JSON.parse(localStorage.getItem('userInfo') || null)
+  const headParams = JSON.parse(Cookies.get('userInfo') || null)
   let ContentTypeArr = ['multipart/form-data']
   if (!ContentTypeArr.includes(config.headers['Content-Type'])) {
     if (config.method === 'post') {
