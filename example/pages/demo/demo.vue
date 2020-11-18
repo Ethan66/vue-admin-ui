@@ -45,6 +45,7 @@
 import tableBtn from '@/components/tableBtn' // 按钮模块
 import tableStatus from '@/components/table-status' // 自定义模块
 import { apiGetUser } from '@/api/authority'
+// import { mergeData } from '@/utils'
 export default {
   name: 'demo-demo',
   components: { tableStatus, tableBtn },
@@ -62,6 +63,38 @@ export default {
     ])
     this.$handleGetTableData(apiGetUser)
   },
+ /*  beforeCreate () {
+    mergeData.call(this)
+  },
+  pageData () {
+    return {
+      items: {
+        search: {
+          normal: { label: '一般输入框' },
+          disable: { label: '禁止输入', disabled: true },
+          listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
+          daterange: { label: '时间', key: 'str1,str2', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' }
+        },
+        table: {
+          selection: { selectable: (row, index) => index !== 2 },
+          name: { label: '用户名' },
+          roleName: { label: '角色', width: 100 },
+          status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatter: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
+          operator: { label: '操作人', width: 100 },
+          btn: { width: 118, slot: 'btn' }
+        },
+        dialog: {
+          name: { label: '账号' },
+          operator: { label: '密码', disabled: true },
+          roleId: { label: '角色', type: 'select', options: [{ label: '超级管理员', value: 1 }, { label: '管理员', value: 7 }, { label: '技术', value: 8 }] },
+          status: { label: '状态', type: 'radio', options: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] }
+        }
+      },
+      btns: {
+        dialog: ['cancel', 'confirm', { confirm2: { code: 'demo1', name: '确认2', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false } }]
+      }
+    }
+  }, */
   methods: {
     // 搜索
     handleSearch (val) {

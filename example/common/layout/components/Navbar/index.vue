@@ -6,7 +6,9 @@
     ></i>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item v-for="item in $route.matched" :key="item.apth">{{ item.meta.title }}</el-breadcrumb-item>
+      <template v-if="$route.path!=='/admin/index'">
+        <el-breadcrumb-item v-for="item in $route.matched" :key="item.apth">{{ item.meta.title }}</el-breadcrumb-item>
+      </template>
     </el-breadcrumb>
     <el-dropdown>
       <span class="el-dropdown-link">

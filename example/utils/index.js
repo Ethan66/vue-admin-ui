@@ -1,3 +1,4 @@
+import Vue from 'vue'
 // 判断item是否存在list中
 export function itemIncludesList (item, list, id, childListName) {
   if (!item.hasOwnProperty(id)) {
@@ -28,4 +29,15 @@ export const purifyParams = (params) => {
   let result = {}
   Object.keys(params).forEach(key => ((params[key] !== '' && params[key] !== null && params[key] !== undefined) && (result[key] = params[key])))
   return result
+}
+
+// 合并Vue中的data参数
+export const mergeData = function () {
+  const proto = Object.getPrototypeOf(this.$options)
+  if (!proto.pageData) return false
+  Object.setPrototypeOf(this.$options, Vue.util.mergeOptions(proto, {
+    data () {
+      return new this.$InitObj(proto.pageData.call(this))
+    }
+  }, this))
 }
