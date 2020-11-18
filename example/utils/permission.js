@@ -4,7 +4,6 @@ import Vue from 'vue'
 
 let menuConfig = {}
 
-
 export default class Permission {
   constructor (options) {
     this.btn = options.btn
@@ -17,57 +16,54 @@ export default class Permission {
     this.getMenus(list, this.menu)
   }
 
+  // 获取授权按钮
   getBtns (list, config) {
     const { level, levelValue, unique, name } = config
     this.btnList = list.filter(item => item[level] === levelValue)
-      .map(item => ({ btnCode: item[unique], btnName: item[name] }))
-  }
-
-  getMenus (list, config) {
-    const { id, parentId, level, sortNo } = config
-    const menuList = list.filter(item => item[level] !== this.levelValue)
-    this.menuList = adminMethods.menuRelation(menuList, id, parentId, level, sortNo)
-    this.menuRoutes = handleGetMenuRoutes(this.menuList)
-  }
-}
-
-class BtnList {
-  constructor () {
-    this.setBtnList()
-  }
-
-  // 重新设置btnList
-  setBtnList (btnList) {
-    this.btnList = btnList // 刷新更新，不取本地
-    Vue.$InitObj && (Vue.$InitObj.btnList = btnList)
-    sessionStorage.setItem('btnList', JSON.stringify(btnList || []))
+      .map(item => ({ code: item[unique], name: item[name] }))
+      Vue.prototype.$InitObj && (Vue.prototype.$InitObj.btnList = this.btnList)
+      this.setBtnList()
+    }
+    
+    // 获取授权菜单
+    getMenus (list, config) {
+      const { id, parentId, level, sortNo } = config
+      const menuList = list.filter(item => item[level] !== this.levelValue)
+      this.menuList = adminMethods.menuRelation(menuList, id, parentId, level, sortNo)
+      this.menuRoutes = handleGetMenuRoutes(this.menuList)
+    }
+    
+    // 将btnList保存在Permission的静态属性中
+    setBtnList () {
+      const list = this.btnList
+      Permission.btnList = list
+      sessionStorage.setItem('btnList', JSON.stringify(list || []))
   }
 
   // 获取用户授权按钮
   getBtnName (btnCode) {
-    let btnList = this.btnList
-    if (!btnList) return false
-    let obj = btnList.find(item => item.btnCode === btnCode)
-    return obj && obj.btnName
+    const btns = Permission.btnList
+    if (!btns) return false
+    let obj = btns.find(item => item.code === btnCode)
+    return obj && obj.name
   }
 
   // 获取表格或对话框授权按钮
-  getConfigBtns (list) {
-    let btnList = this.btnList
-    if (!btnList) return []
-    return list.map(item => {
-      const result = { code: item.code, clickFn: item.clickFn }
-      const tmp = btnList.find(btn => btn.btnCode === item.code)
-      tmp && Object.assign(result, { name: tmp.btnName })
-      return result
+   getConfigBtns (list) {
+    let btns = Permission.btnList
+    if (!btns) return []
+    let result = []
+    list.forEach(item => {
+      let tmp
+      if (tmp = btns.find(btn => btn.code === item.code)) {
+        result.push({ code: item.code, clickFn: item.clickFn, name: tmp.name })
+      }
     })
+    return result
   }
 }
 
-export const authBtns = new BtnList()
-
-// 添加动态(菜单)路由
-// menuList：后台请求的数据，routes：创建的动态路由，用于递归持续添加路由
+// 将menuList转为Routes
 function handleGetMenuRoutes (menuList = [], firstLevel = true) {
   let menuRoutes = []
   menuList.forEach(item => {

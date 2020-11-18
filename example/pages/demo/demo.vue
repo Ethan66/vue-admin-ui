@@ -130,6 +130,9 @@ export default {
             roleId: { label: '角色', type: 'select', options: [{ label: '超级管理员', value: 1 }, { label: '管理员', value: 7 }, { label: '技术', value: 8 }] },
             status: { label: '状态', type: 'radio', options: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] }
           }
+        },
+        btns: {
+          dialog: ['cancel', 'confirm', { confirm2: { code: 'demo1', name: '确认2', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false } }]
         }
       }), val)
     }

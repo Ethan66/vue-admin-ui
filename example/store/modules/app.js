@@ -1,6 +1,6 @@
 import { apiGetUserAuthMenu } from '@/api/login'
 import systemObj from '@/config/system'
-import Permission, { authBtns } from '@/utils/permission'
+import Permission from '@/utils/permission'
 import Cookies from 'js-cookie'
 
 const app = {
@@ -9,8 +9,8 @@ const app = {
       opened: true
     },
     userInfo: JSON.parse(Cookies.get('userInfo') || '{}'),
-    menuList: [], // 刷新更新，不取本地
-    mainTabs: [] // 刷新可本地获取或不取
+    menuList: [], // 刷新更新，不取缓存
+    mainTabs: [] // 刷新更新，不取缓存
   },
   mutations: {
     // 展开/收缩菜单栏
@@ -21,10 +21,6 @@ const app = {
     SAVE_MENULIST: (state, val = []) => {
       state.menuList = val
       sessionStorage.setItem('menuList', JSON.stringify(val))
-    },
-    UPDATE_BTNLIST: (state, val = []) => {
-      state.btnList = val
-      sessionStorage.setItem('btnList', JSON.stringify(val))
     },
     // 保存用户信息
     SAVE_USERINFO: (state, val) => {
@@ -48,7 +44,6 @@ const app = {
             menu: systemObj.menuConfig
           })
           permission.createPermission(res.data.list)
-          authBtns.setBtnList(permission.btnList)
           commit('SAVE_MENULIST', permission.menuList)
           sessionStorage.setItem('dynamicRoutes', JSON.stringify(permission.menuRoutes)) // 保存动态路由
           return permission

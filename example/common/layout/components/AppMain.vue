@@ -26,7 +26,7 @@ export default {
 
 <style lang="less">
 .app-main {
-  min-height: calc(100vh - 55px);
+  min-height: calc(100vh - 85px);
   padding: 0 15px 0;
   position: relative;
   overflow: hidden;
