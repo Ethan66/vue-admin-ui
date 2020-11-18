@@ -1,9 +1,5 @@
 <template>
   <section class="app-main">
-    <subTabs
-      v-if="showSubTabs"
-      :subTabs="subTabsData"
-    />
     <keep-alive :include="keepAliveList">
       <router-view class="transition-group"></router-view>
     </keep-alive>
@@ -11,42 +7,19 @@
 </template>
 
 <script>
-import subTabs from './subTabs'
 import { mapGetters } from 'vuex'
 export default {
   name: 'AppMain',
-  components: { subTabs },
-  data () {
-    return {
-      showSubTabs: false,
-      subTabsData: []
-    }
-  },
   watch: {
     $route: {
       handler: function (val) {
         val && val.meta.menuCode && this.$store.commit('UPDATE_KEEP_ALIVE_LIST', { name: val.meta.menuCode })
-        this.handleIsShowSubTabs(val)
       },
       immediate: true
     }
   },
   computed: {
-    ...mapGetters(['keepAliveList', 'subTabObj'])
-  },
-  created () {
-    this.handleIsShowSubTabs(this.$route, true)
-  },
-  methods: {
-    handleIsShowSubTabs (val, isRefresh = false) {
-      let path = val.path.split('/').slice(0, -1).join('/')
-      if (this.subTabObj[path]) {
-        this.showSubTabs = true
-        this.subTabsData = this.subTabObj[path]
-      } else {
-        this.showSubTabs = false
-      }
-    }
+    ...mapGetters(['keepAliveList'])
   }
 }
 </script>

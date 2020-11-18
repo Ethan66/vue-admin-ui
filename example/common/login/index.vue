@@ -38,7 +38,6 @@ export default {
     sessionStorage.clear()
     this.$store.commit('UPDATE_KEEP_ALIVE_LIST', { type: 'deleteAll' })
     this.$store.commit('UPDATE_PAGE_SEARCH_VALUES', { type: 'deleteAll' })
-    this.$store.commit('TOGGLE_ISADDDYNAMICROUTES', false)
     this.handleCheckIp()
   },
   methods: {

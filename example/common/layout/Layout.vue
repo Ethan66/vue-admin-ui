@@ -5,19 +5,20 @@
     </sidebar>
     <div class="main-container">
       <navbar/>
+      <tags-view />
       <app-main/>
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components/index'
+import { Navbar, Sidebar, AppMain, TagsView } from './components'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
-    Navbar, Sidebar, AppMain
+    Navbar, Sidebar, AppMain, TagsView
   },
   computed: {
     ...mapGetters([

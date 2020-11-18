@@ -68,7 +68,7 @@ export default {
           apiLogin(params).then(res => {
             this.isLoading = false
             if (res.code === '000000') {
-              this.$store.commit('UPDATE_USERINFO', res.data)
+              this.$store.commit('SAVE_USERINFO', res.data)
               this.$router.push('/')
             } else {
               if (!this.handleSpeciaCode(res.code)) {

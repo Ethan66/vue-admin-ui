@@ -8,23 +8,6 @@ export const getSuccessMsg = function (text, type = 'success') {
   })
 }
 
-// 从url上获取页面的$options.name
-export const getOptionsName = (url) => {
-  if (url) {
-    let arr = url.split('/').slice(-2)
-    let result = arr[0]
-    arr[1] !== 'index' && (result += `-${arr[1]}`)
-    return result
-  }
-}
-
-// 接口传参删除多余参数
-export const purifyParams = (params) => {
-  let result = {}
-  Object.keys(params).forEach(key => ((params[key] !== '' && params[key] !== null && params[key] !== undefined) && (result[key] = params[key])))
-  return result
-}
-
 // 点击搜索按钮
 export const handleSearch = function (val) {
   this.queryData = val

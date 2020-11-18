@@ -1,4 +1,4 @@
-import { postRequest } from '@/config/network'
+import { postRequest } from '@/utils/network'
 import config from './config'
 const { baseUrl } = config
 const base = '/bl/console/api'

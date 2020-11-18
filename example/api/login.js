@@ -1,4 +1,4 @@
-import { getRequest, postRequest } from '@/config/network'
+import { getRequest, postRequest } from '@/utils/network'
 import config from './config'
 const { baseUrl } = config
 
