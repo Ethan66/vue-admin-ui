@@ -9,7 +9,6 @@ import systemObj from '@/config/system'
 import Permission from '@/utils/permission'
 import { dialogBtn } from '@/config/defaultBtnData'
 import { handleSearch, handleChangePage, apiCreateData, apiEditData, apiDeleteData, handleGetTableData } from '@/utils/page'
-import { purifyParams } from '@/utils'
 import '$pkg/style/dialog.less'
 import '$pkg/style/search.less'
 import '$pkg/style/table.less'
@@ -39,7 +38,6 @@ Vue.directive('btn', {
   }
 })
 
-Vue.prototype.$purifyParams = purifyParams
 Vue.prototype.$format = formatDate
 Vue.prototype.$getBtnName = Permission.prototype.getBtnName
 Vue.prototype.$getAuthBtns = Permission.prototype.getConfigBtns
