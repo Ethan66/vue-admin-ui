@@ -11,6 +11,7 @@
         v-model="loginForm.user"
         placeholder="账号"
         @blur="handleBlur('user')"
+        @keyup.enter.native="submitForm('login')"
       />
     </el-form-item>
 
@@ -20,6 +21,7 @@
         v-model="loginForm.password"
         placeholder="密码"
         @blur="handleBlur('password')"
+        @keyup.enter.native="submitForm('login')"
       />
     </el-form-item>
 

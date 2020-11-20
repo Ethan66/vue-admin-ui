@@ -52,9 +52,15 @@ router.beforeEach(async (to, from, next) => {
     ])
     let newPath = to.path
     if (from.path === '/login') {
+      let redirect = ''
+      if (redirect = from.query.redirect) {
+        redirect = decodeURIComponent(redirect)
+      }
       try {
-        if (from.query.redirect && itemIncludesList({ menuUrl: from.query.redirect }, menuList, 'menuUrl', 'list')) {
-          newPath = from.query.redirect
+        if (itemIncludesList({ menuUrl: redirect }, menuList, 'menuUrl', 'list') ||
+          ['/admin/index', '/404'].includes(redirect)
+        ) {
+          newPath = redirect
         } else {
           newPath = menuList[0].list[0].menuUrl
         }
