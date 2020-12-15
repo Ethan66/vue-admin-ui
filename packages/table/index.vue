@@ -19,6 +19,7 @@
           :key="`index${i}`"
           align="center"
           type="index"
+          v-bind="item"
         />
         <el-table-column
           v-if="item.type==='selection'"

@@ -42,7 +42,7 @@ export default {
     return new this.$InitObj({
       items: {
         table: {
-          index: { type: 'index' },
+          index: { type: 'index', label: '序号' },
           selection: { selectable: (row, index) => index !== 2 },
           account: { label: '账号', width: 100, show: false },
           name: { label: '用户名' },
