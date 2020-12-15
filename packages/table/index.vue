@@ -15,6 +15,12 @@
     >
       <template v-for="(item, i) in tableItem">
         <el-table-column
+          v-if="item.type === 'index'"
+          :key="`index${i}`"
+          align="center"
+          type="index"
+        />
+        <el-table-column
           v-if="item.type==='selection'"
           :key="`selection${i}`"
           align="center"
