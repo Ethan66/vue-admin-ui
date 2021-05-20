@@ -94,6 +94,7 @@ export default {
           }
         })
       },
+      deep: true,
       immediate: true
     },
     showDialog (val) {
