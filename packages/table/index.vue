@@ -33,6 +33,7 @@
             :key="`content${i}`"
             :min-width="item.width"
             :width="undefined"
+            :type="undefined"
             v-bind="item"
           />
           <el-table-column
@@ -41,6 +42,7 @@
             :min-width="item.width"
             :width="undefined"
             :slot="undefined"
+            :type="undefined"
             v-bind="item"
           >
             <template slot-scope="scope">
