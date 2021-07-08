@@ -130,7 +130,7 @@ export default {
       Object.keys(value).forEach(key => {
         if (/\w+,\w+/.test(key)) {
           const tmpKeys = key.split(',')
-          const tmp = value[key]
+          const tmp = value[key] || []
           value[tmpKeys[0]] = tmp[0]
           value[tmpKeys[1]] = tmp[1]
           delete value[key]
