@@ -4,7 +4,7 @@
       ref="table"
       :loading="tableLoading"
       :data="tableData"
-      :items="tableItem"
+      :items="newTableItem"
       :page="tablePages"
       @jump="handleChangePage"
       @selection-change="handleSelectChange"
@@ -16,7 +16,7 @@
       </div>
       <template slot="status" slot-scope="scope">
         <table-status
-          :item="tableItem[4]"
+          :item="tableItem.status"
           :row="scope.row"
         ></table-status>
       </template>
@@ -39,7 +39,20 @@ export default {
   name: 'demo-table',
   components: { tableStatus, tableBtn },
   data () {
-    return new this.$InitObj({
+    console.log(22, this.$InitObj2({
+      table: {
+        index: { type: 'index', label: '序号' },
+        selection: { selectable: (row, index) => index !== 2 },
+        account: { label: '账号', width: 100, show: false },
+        name: { label: '用户名' },
+        roleName: { label: '角色', width: 100 },
+        status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatter: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
+        loginTime: { label: '最近登录', width: 120 },
+        operator: { label: '操作人', width: 100 },
+        btn: { width: 118, slot: 'btn' }
+      }
+    }))
+    /* return new this.$InitObj({
       items: {
         table: {
           index: { type: 'index', label: '序号' },
@@ -53,9 +66,25 @@ export default {
           btn: { width: 118, slot: 'btn' }
         }
       }
+    }) */
+    return Object.assign(this.$InitObj2({
+      table: {
+        index: { type: 'index', label: '序号' },
+        selection: { selectable: (row, index) => index !== 2 },
+        account: { label: '账号', width: 100, show: false },
+        name: { label: '用户名' },
+        roleName: { label: '角色', width: 100 },
+        status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatter: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
+        loginTime: { label: '最近登录', width: 120 },
+        operator: { label: '操作人', width: 100 },
+        btn: { width: 118, slot: 'btn' }
+      }
+    }), {
+      newTableItem: {}
     })
   },
   created () {
+    this.newTableItem = Object.values(this.tableItem)
     this.tableBtn = this.$getAuthBtns([
       { code: 'menu-edit-menu', clickFn: this.handleEditData },
       { code: 'menu-delete', clickFn: this.handleDeleteData }

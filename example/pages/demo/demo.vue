@@ -1,14 +1,14 @@
 <template>
   <div>
     <search-module
-      :items="searchItem"
-      v-model="searchValues"
+      :items="newSearch1Item"
+      v-model="search1Values"
       @search="handleSearch" />
     <table-module
       ref="table"
       :loading="tableLoading"
       :data="tableData"
-      :items="tableItem"
+      :items="newTableItem"
       :page="tablePages"
       @jump="handleChangePage"
       @selection-change="handleSelectChange"
@@ -18,7 +18,7 @@
       </div>
       <template slot="status" slot-scope="scope">
         <table-status
-          :item="tableItem[3]"
+          :item="tableItem.status"
           :row="scope.row"
         ></table-status>
       </template>
@@ -34,7 +34,7 @@
       :title="dialogTitle"
       :showDialog.sync="showDialogForm"
       :data="editData"
-      :items="dialogItem"
+      :items="newDialogItem"
       :btns="dialogBtn"
       :rules="rules">
       </dialog-module>
@@ -53,10 +53,16 @@ export default {
     return this.handleInit({
       pageData1: 'searchDemo',
       pageData2: 'i am test',
-      rules: {}
+      rules: {},
+      newSearch1Item: {},
+      newTableItem: {},
+      newDialogItem: {}
     })
   },
   created () {
+    this.newSearch1Item = Object.values(this.search1Item)
+    this.newTableItem = Object.values(this.tableItem)
+    this.newDialogItem = Object.values(this.dialogItem)
     this.tableBtn = this.$getAuthBtns([
       { code: 'menu-edit-menu', clickFn: this.handleEditData },
       { code: 'menu-delete', clickFn: this.handleDeleteData }
@@ -141,32 +147,61 @@ export default {
     },
     // 数据初始化
     handleInit (val) {
-      return Object.assign(new this.$InitObj({
-        items: {
-          search: {
-            normal: { label: '一般输入框' },
-            disable: { label: '禁止输入', disabled: true },
-            listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
-            daterange: { label: '时间', key: 'str1,str2', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' }
-          },
-          table: {
-            selection: { selectable: (row, index) => index !== 2 },
-            name: { label: '用户名' },
-            roleName: { label: '角色', width: 100 },
-            status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatter: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
-            operator: { label: '操作人', width: 100 },
-            btn: { width: 118, slot: 'btn' }
-          },
-          dialog: {
-            name: { label: '账号' },
-            operator: { label: '密码', disabled: true },
-            roleId: { label: '角色', type: 'select', options: [{ label: '超级管理员', value: 1 }, { label: '管理员', value: 7 }, { label: '技术', value: 8 }] },
-            status: { label: '状态', type: 'radio', options: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] }
-          }
+      console.log(333, this.$InitObj2({
+        search: [{
+          normal: { label: '一般输入框' },
+          disable: { label: '禁止输入', disabled: true },
+          listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
+          daterange: { label: '时间', key: 'str1,str2', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' }
+        }, {
+          normal: { label: '一般输入框' },
+          disable: { label: '禁止输入', disabled: true },
+          listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
+          daterange: { label: '时间', key: 'str1,str2', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' }
+        }],
+        table: {
+          selection: { selectable: (row, index) => index !== 2 },
+          name: { label: '用户名' },
+          roleName: { label: '角色', width: 100 },
+          status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatter: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
+          operator: { label: '操作人', width: 100 },
+          btn: { width: 118, slot: 'btn' }
         },
-        btns: {
-          dialog: ['cancel', 'confirm', { confirm2: { code: 'demo1', name: '确认2', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false } }]
-        }
+        dialog: {
+          name: { label: '账号' },
+          operator: { label: '密码', disabled: true },
+          roleId: { label: '角色', type: 'select', options: [{ label: '超级管理员', value: 1 }, { label: '管理员', value: 7 }, { label: '技术', value: 8 }] },
+          status: { label: '状态', type: 'radio', options: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] }
+        },
+        dialogBtn: ['cancel', 'confirm', { confirm2: { code: 'demo1', name: '确认2', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false } }]
+      }));
+      return Object.assign(this.$InitObj2({
+        search: [{
+          normal: { label: '一般输入框' },
+          disable: { label: '禁止输入', disabled: true },
+          listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
+          daterange: { label: '时间', key: 'str1,str2', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' }
+        }, {
+          normal: { label: '一般输入框' },
+          disable: { label: '禁止输入', disabled: true },
+          listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
+          daterange: { label: '时间', key: 'str1,str2', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' }
+        }],
+        table: {
+          selection: { selectable: (row, index) => index !== 2 },
+          name: { label: '用户名' },
+          roleName: { label: '角色', width: 100 },
+          status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatter: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
+          operator: { label: '操作人', width: 100 },
+          btn: { width: 118, slot: 'btn' }
+        },
+        dialog: {
+          name: { label: '账号' },
+          operator: { label: '密码', disabled: true },
+          roleId: { label: '角色', type: 'select', options: [{ label: '超级管理员', value: 1 }, { label: '管理员', value: 7 }, { label: '技术', value: 8 }] },
+          status: { label: '状态', type: 'radio', options: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] }
+        },
+        dialogBtn: ['cancel', 'confirm', { confirm2: { code: 'menu-edit-menu', name: '确认2', type: 'edit', color: 'primary', clickFn: 'handleSubmit', disabled: false } }]
       }), val)
     }
   }

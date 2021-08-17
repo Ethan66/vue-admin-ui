@@ -22,6 +22,7 @@ export default class Permission {
     this.btnList = list.filter(item => item[level] === levelValue)
       .map(item => ({ code: item[unique], name: item[name] }))
       Vue.prototype.$InitObj && (Vue.prototype.$InitObj.btnList = this.btnList)
+      Vue.prototype.$InitObj2 && (Vue.prototype.$InitObj2.defaults.permissions = this.btnList)
       this.setBtnList()
     }
     

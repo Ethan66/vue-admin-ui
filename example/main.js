@@ -17,6 +17,8 @@ import { formatDate } from 'vue-admin-methods'
 
 import adminUtils from '$pkg/utils/index.ts'
 
+adminUtils.atrans.defaults.version = '1.0'
+
 import {
   searchModule,
   tableModule,
@@ -43,6 +45,7 @@ Vue.prototype.$getBtnName = Permission.prototype.getBtnName
 Vue.prototype.$getAuthBtns = Permission.prototype.getConfigBtns
 Vue.prototype.$systemObj = systemObj
 Vue.prototype.$InitObj = adminUtils.onCreateBasicData({ defaultDialogBtn: dialogBtn })
+Vue.prototype.$InitObj2 = adminUtils.atrans
 Vue.prototype.$setItem = adminUtils.setItemProp
 Vue.prototype.$handleSearch = handleSearch
 Vue.prototype.$handleGetTableData = handleGetTableData

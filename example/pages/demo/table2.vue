@@ -3,9 +3,9 @@
     <table-module
       ref="table"
       :loading="tableLoading"
-      :data="tableData"
-      :items="tableItem"
-      :page="tablePages"
+      :data="table1Data"
+      :items="newTable1Item"
+      :page="table1Pages"
       @jump="handleChangePage"
       @selection-change="handleSelectChange"
     >
@@ -15,7 +15,7 @@
       </div>
       <template slot="status" slot-scope="scope">
         <table-status
-          :item="tableItem[4]"
+          :item="table1Item.status"
           :row="scope.row"
         ></table-status>
       </template>
@@ -30,7 +30,7 @@
       ref="table2"
       :loading="table2Loading"
       :data="table2Data"
-      :items="table2Item"
+      :items="newTable2Item"
       :page="table2Pages"
       @jump="handleChangePage2"
       @selection-change="handleSelectChange"
@@ -40,7 +40,7 @@
       </div>
       <template slot="status" slot-scope="scope">
         <table-status
-          :item="tableItem[4]"
+          :item="table2Item.status"
           :row="scope.row"
         ></table-status>
       </template>
@@ -63,9 +63,8 @@ export default {
   name: 'demo-table2',
   components: { tableStatus, tableBtn },
   data () {
-    return Object.assign(new this.$InitObj({
-      items: {
-        table: {
+    return Object.assign(this.$InitObj2({
+        table: [{
           selection: { selectable: (row, index) => index !== 2 },
           account: { label: '账号', width: 100, show: true },
           name: { label: '用户名' },
@@ -74,19 +73,22 @@ export default {
           loginTime: { label: '最近登录', width: 120 },
           operator: { label: '操作人', width: 100 },
           btn: { width: 118, slot: 'btn' }
-        },
-        table2: {
+        }, {
           selection: '',
           account: { label: '账号', width: 100 },
           roleName: { label: '角色', width: 100 },
           loginTime: { label: '最近登录', width: 120, show: false },
           operator: { label: '操作人', width: 100 },
           btn: { width: 118, slot: 'btn' }
-        }
-      }
-    }))
+        }]
+    }), {
+      newTable1Item: [],
+      newTable2Item: []
+    })
   },
   created () {
+    this.newTable1Item = Object.values(this.table1Item)
+    this.newTable2Item = Object.values(this.table2Item)
     this.tableBtn = this.$getAuthBtns([
       { code: 'menu-edit-menu', clickFn: this.handleEditData },
       { code: 'menu-delete', clickFn: this.handleDeleteData }
@@ -103,16 +105,16 @@ export default {
       this.tableLoading = true
       this.tableLoading2 = true
       let params = Object.assign({
-        currentPage: this.tablePages.current,
-        pageSize: this.tablePages.pageSize
+        currentPage: this.table1Pages.current,
+        pageSize: this.table1Pages.pageSize
       }, val)
       apiGetUser(params).then(res => {
         if (res.code === '000000') {
           const { list, page } = res.data
-          this.table2Data = this.tableData = this.allData = list
+          this.table2Data = this.table1Data = this.allData = list
           if (page) {
-            this.tablePages.current = page.currentPage
-            this.tablePages.total = page.total
+            this.table1Pages.current = page.currentPage
+            this.table1Pages.total = page.total
             this.table2Pages.current = page.currentPage
             this.table2Pages.total = page.total
           }
