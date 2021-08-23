@@ -135,7 +135,11 @@ export default {
           this.showDialog1 = false
           return true
         } else {
-          this.parent[clickFn]()
+          if (typeof clickFn === 'function') {
+            clickFn()
+          } else {
+            this.parent[clickFn]()
+          }
           return true
         }
       } else if (type === 'edit') {
@@ -144,7 +148,11 @@ export default {
           return false
         }
         if (!this.onConfirmEdit('form')) return false
-        this.parent[clickFn]()
+        if (typeof clickFn === 'function') {
+            clickFn()
+          } else {
+            this.parent[clickFn]()
+          }
       }
     },
     // 点击确认时校验
