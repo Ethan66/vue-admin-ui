@@ -22,7 +22,7 @@ const defaults: Defaults = {
     table: { isEdit: 0 },
     dialog: { editData: {}, dialogTitle: '', showDialogForm: false, allRead: false }
   },
-  childKeys: ['show', 'type', 'label', 'options'],
+  childKeys: ['show', 'type', 'label', 'options', 'span'],
   listeners: ['click', 'change', 'input', 'focus', 'blur'],
   placeholders: ['text', 'input','number', 'password', 'textarea'],
   interceptors: defaultInterceptors
