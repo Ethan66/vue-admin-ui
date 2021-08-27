@@ -87,13 +87,13 @@ export default {
           let newVal = Object.create(null)
           if (typeof val === 'string') {
             if (defaults.dialogBtn[val]) {
-              newVal = defaults.dialogBtn[val]
+              newVal = { ...defaults.dialogBtn[val] }
             } else {
               throw new Error('请查看atrans.defaults.dialogBtn配置项')
             }
           } else {
             const key = Object.keys(val)[0]
-            newVal = Object.assign(defaults.dialogBtn[key] || {}, val[key])
+            newVal = Object.assign({}, defaults.dialogBtn[key] || {}, val[key])
           }
           if (newVal.code) {
             if (defaults.permissions.constructor === Array) {
