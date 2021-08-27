@@ -78,7 +78,7 @@ module.exports = {
       '$pkg': resolve('packages'),
       '@@': resolve('lib')
     },
-    extensions: ['*', '.js', '.vue', '.json']
+    extensions: ['*', '.js', '.vue', '.json', '.ts']
   },
   devServer: {
     host: 'localhost',
