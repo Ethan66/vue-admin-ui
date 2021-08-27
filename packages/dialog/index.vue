@@ -2,13 +2,13 @@
   <el-dialog :title="title" ref="dialog" :visible.sync="showDialog1" :class="['dialogModule', { doubleColumn }]" :close-on-click-modal="false">
     <el-form :model="data" :rules="rules" ref="form">
       <el-row v-for="(item, i) in dialogItem" :key="i" :class="onClass(item.span, item.type)">
-        <el-col :class="item.clsName || ''">
+        <el-col :class="item.$attr.clsName || ''">
            <el-form-item
             v-if="item.$attr.slot"
             :class="['label' + chineseTybe]"
             :label="item.label"
             :prop="item.key"
-            :key="i"
+            :key="item.key"
           >
             <slot :name="item.$attr.slot"></slot>
           </el-form-item>
@@ -18,6 +18,7 @@
               :class="['label' + chineseTybe, { radio: ['radio'].includes(item.type) }]"
               :label="item.label"
               :prop="item.key"
+              :key="item.key"
             >
               <basic-module
                 :dateTypeList="dateTypeList"
