@@ -105,6 +105,7 @@ export default {
         this.$nextTick(() => {
           this.$refs.form && this.$refs.form.resetFields()
         })
+        this.chineseTybe = 0
         this.showDialog1 = false
       }
     },
