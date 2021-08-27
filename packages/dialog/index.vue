@@ -85,6 +85,7 @@ export default {
   watch: {
     items: {
       handler (val) {
+        this.chineseTybe = 0
         this.dialogItem = val.filter(item => item.show)
         this.dialogItem.forEach(item => {
           if (item.label.length > this.chineseTybe) {
@@ -105,7 +106,6 @@ export default {
         this.$nextTick(() => {
           this.$refs.form && this.$refs.form.resetFields()
         })
-        this.chineseTybe = 0
         this.showDialog1 = false
       }
     },
