@@ -160,7 +160,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
               obj.key = key
             }
             let prefix = placeholderList.includes(obj.type) ? '请输入' : '请选择'
-            obj.placeholder = `${prefix}${obj.label}`
+            !obj.placeholder && (obj.placeholder = `${prefix}${obj.label}`)
           }
           if (type === 'search' || type === 'dialog') {
             let tmp = {}
