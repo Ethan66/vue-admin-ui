@@ -1,64 +1,90 @@
 <script>
+const layouts = {
+  config: {
+    general: 'input,switch,cascader, date-picker, time-picker, input-number, slider, rate',
+    hasChild: 'select, radio-group'
+  },
+  general(Tag) {
+    const { field, $on, $attr } = this.config
+    const extendItem = this.extendItem
+    const listeners = this.openListeners ? $on : null
+    return (
+      <Tag
+      v-model={ this.result[field] }
+      { ...{ attrs: { ...$attr, ...extendItem }} }
+      slot={ undefined }
+      { ...{ on: listeners } }
+      >
+        { $attr && $attr.slot && <template slot={ $attr.slot }>{this.$slots[$attr.slot][0]}</template> }
+      </Tag>
+    )
+  },
+  hasChild(Tag) {
+    const { field, $on, $attr, option, isBtn } = this.config
+    const extendItem = this.extendItem
+    const listeners = this.openListeners ? $on : null
+    const match = Tag.match(/(.+?)(-group)?$/)
+    let ChildTag = match[2] ? match[1] : 'el-option'
+    if (isBtn) {
+      ChildTag = `${ChildTag}-button`
+    }
+    return (
+      <Tag
+        v-model={ this.result[field] }
+        { ...{ attrs: { ...$attr, ...extendItem }} }
+        slot={ undefined }
+        { ...{ on: listeners } }
+      >
+        {option.map((item, i) => (
+          match[2]
+            ? <ChildTag key={i} label={item.value}>
+              {item.label}
+            </ChildTag>
+            : <ChildTag
+              key={i}
+              label={item.label}
+              value={item.value}
+            ></ChildTag>
+        ))}
+      </Tag>
+    )
+  }
+}
+
 export default {
-  name: 'basic-module',
+  name: 'FormItem',
   props: {
-    config: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
     result: {
       type: Object,
-      default () {
+      required: true
+    },
+    config: {
+      type: Object,
+      required: true
+    },
+    // 模块属性
+    extendItem: {
+      type: Object,
+      default() {
         return {}
       }
     },
-    dateTypeList: {
-      type: Array
+    // 是否打开事件
+    openListeners: {
+      type: Boolean,
+      default: true
     }
   },
-  computed: {
-    type () {
-      return this.config.type
+  render() {
+    let type
+    for (const key in layouts.config) {
+      if (layouts.config[key].includes(this.config.el)) {
+        type = key
+        break
+      }
     }
-  },
-  render (h) {
-    const { key, $attr, $on } = this.config
-    const result = this.result
-    const type = this.type
-    if (type === 'input') {
-      return (
-        <el-input
-          v-model={result[key]}
-          {...{ attrs: $attr } }
-          { ...{ on: $on } }
-        ></el-input>)
-    } else if (type === 'select') {
-      return (
-        <el-select
-          v-model={result[key]}
-          {...{ attrs: $attr } }
-          { ...{ on: $on } }
-        >
-          {this.config.options.map((item, index) => {
-            return <el-option key={index} label={item.label} value={item.value}></el-option>
-          })}
-        </el-select>
-      )
-    } else if (this.dateTypeList.includes(type)) {
-      return (
-        <el-col>
-          <el-date-picker
-            type={type}
-            v-model={result[key]}
-            {...{ attrs: $attr }}
-            { ...{ on: $on } }
-            style="width: 100%;"></el-date-picker>
-        </el-col>
-      )
-    }
-    return null
+    return layouts[type].call(this, `el-${this.config.el}`)
   }
 }
 </script>
+

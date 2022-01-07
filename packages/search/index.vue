@@ -6,20 +6,24 @@
           <el-form-item
             v-if="item.$attr.slot"
             :label="item.label"
-            :prop="item.key"
+            :prop="item.field"
             :key="i"
           >
             <slot :name="item.$attr.slot"></slot>
           </el-form-item>
           <template v-else>
             <el-form-item
-              v-if="['input', 'select', ...dateTypeList].includes(item.type)"
+              v-if="els.includes(item.el)"
               :label="item.label"
-              :prop="item.key"
+              :prop="item.field"
               :key="i"
             >
+              <!-- <basic-module
+                :els="els"
+                :config="item"
+                :result="value"
+              ></basic-module> -->
               <basic-module
-                :dateTypeList="dateTypeList"
                 :config="item"
                 :result="value"
               ></basic-module>
@@ -83,7 +87,7 @@ export default {
   },
   data () {
     return {
-      dateTypeList: ['year', 'month', 'date', 'dates', 'week', 'datetime', 'datetimerange', 'daterange', 'monthrange'] // ele-date默认type类型
+      els: ['input', 'switch', 'cascader', 'date-picker', 'time-picker', 'input-number', 'slider', 'rate', 'select', 'radio-group']
     }
   },
   watch: {
@@ -106,9 +110,10 @@ export default {
   methods: {
     // 对日期key是数组的进行初始化数据
     initValues (items, val) {
+      debugger
       let initVal = Object.assign({}, val, this.default)
       const keys = items.filter(item => item.show !== false).reduce((result, current) => {
-        result.push(current.key)
+        result.push(current.field)
         return result
       }, [])
       keys.forEach(key => {

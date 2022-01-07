@@ -23,16 +23,16 @@ export default {
           max: { label: '最大输入值', maxlength: 3 },
           clear: { label: '可清空', clearable: true },
           disable: { label: '禁止输入', disabled: true },
-          listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
-          'str1,str2': { label: '时间', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' },
-          date: { label: '时间', type: 'date' },
-          week: { label: '周', type: 'week', format: 'yyyy 第 WW 周' },
-          month: { label: '月', type: 'month' },
-          year: { label: '年', type: 'year' }
+          listen: { label: '监听改变', el: 'select', option: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange },
+          'str1,str2': { label: '时间', el: 'date-picker', type: 'daterange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' },
+          date: { label: '时间', el: 'date-picker' },
+          week: { label: '周', el: 'date-picker', type: 'week', format: 'yyyy 第 WW 周' },
+          month: { label: '月', el: 'date-picker', type: 'month' },
+          year: { label: '年', el: 'date-picker', type: 'year' }
         },
         search2: {
           disable: { label: '禁止输入', disabled: true },
-          listen: { label: '监听改变', type: 'select', options: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange2 }
+          listen: { label: '监听改变', el: 'select', option: [{ label: '允许输入', value: 1 }, { label: '禁止输入', value: 2 }], change: this.handleChange2 }
         }
       }
     }))

@@ -122,12 +122,12 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
 
     initItem (items, modules) {
       let basicConfig = {
-        search: { label: '', key: '', type: 'input', placeholder: '', show: true },
-        table: { label: '', prop: '', type: 'cell', width: 80 },
-        dialog: { label: '', key: '', type: 'text', show: true }
+        search: { label: '', field: '', el: 'input', placeholder: '', show: true },
+        table: { label: '', prop: '', el: 'cell', width: 80 },
+        dialog: { label: '', field: '', el: 'text', show: true }
       }
       const listeners = ['click', 'change', 'input', 'focus', 'blur']
-      const externalKeys = ['key', 'show', 'type', 'label', 'options']
+      const externalKeys = ['field', 'show', 'el', 'label', 'option']
       const placeholderList = ['text', 'input','number', 'password', 'textarea'];
       (modules as string[]).forEach(module => {
         let configObj = items[module]
@@ -154,10 +154,10 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
             }
           } else {
             if (type === 'search') this[`${module}Values`][key] = undefined
-            if (type === 'search' && configObj[key].key) {
-              obj.key = configObj[key].key
+            if (type === 'search' && configObj[key].field) {
+              obj.field = configObj[key].field
             } else {
-              obj.key = key
+              obj.field = key
             }
             let prefix = placeholderList.includes(obj.type) ? '请输入' : '请选择'
             obj.placeholder = `${prefix}${obj.label}`
