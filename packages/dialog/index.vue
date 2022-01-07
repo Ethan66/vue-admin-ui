@@ -1,27 +1,33 @@
 <template>
   <el-dialog :title="title" ref="dialog" :visible.sync="showDialog1" :class="['dialogModule', { doubleColumn }]" :close-on-click-modal="false">
     <el-form :model="data" :rules="rules" ref="form">
-      <el-row v-for="(item, i) in dialogItem" :key="i" :class="onClass(item.span, item.type)">
+      <el-row v-for="(item, i) in dialogItem" :key="i" :class="onClass(item.span, item.el)">
         <el-col :class="(item.$attr && item.$attr.clsName) || ''">
            <el-form-item
             v-if="item.$attr.slot"
             :class="['label' + chineseTybe]"
             :label="item.label"
-            :prop="item.key"
-            :key="item.key"
+            :prop="item.field"
+            :key="item.field"
           >
             <slot :name="item.$attr.slot"></slot>
           </el-form-item>
           <template v-else>
             <el-form-item
-              v-if="['text', 'number', 'switch', 'radio', 'checkbox', 'textarea', 'select', ...dateTypeList].includes(item.type) && item.show"
-              :class="['label' + chineseTybe, { radio: ['radio'].includes(item.type) }]"
+              v-if="els.includes(item.el) && item.show"
+              :class="['label' + chineseTybe, { radio: ['radio'].includes(item.el) }]"
               :label="item.label"
-              :prop="item.key"
-              :key="item.key"
+              :prop="item.field"
+              :key="item.field"
             >
-              <basic-module
+              <!-- <basic-module
                 :dateTypeList="dateTypeList"
+                :config="item"
+                :result="data"
+                :all-read="allRead"
+              >
+              </basic-module> -->
+              <basic-module
                 :config="item"
                 :result="data"
                 :all-read="allRead"
@@ -38,7 +44,7 @@
                  v-if="item.show"
                  :type="item.color"
                  :disabled="item.disabled"
-                 @click="onFn(item.type, item.clickFn || '')">{{item.name}}</el-button>
+                 @click="onFn(item.el, item.clickFn || '')">{{item.name}}</el-button>
       </template>
     </div>
   </el-dialog>
@@ -76,7 +82,7 @@ export default {
   },
   data () {
     return {
-      dateTypeList: ['year', 'month', 'date', 'dates', 'week', 'datetime', 'datetimerange', 'daterange', 'monthrange'], // ele-date默认type类型
+      els: ['input', 'switch', 'cascader', 'date-picker', 'time-picker', 'input-number', 'slider', 'rate', 'select', 'radio-group'],
       chineseTybe: 0,
       showDialog1: false,
       dialogItem: []
@@ -91,8 +97,8 @@ export default {
           if (item.label.length > this.chineseTybe) {
             this.chineseTybe = item.label.length
           }
-          if (['checkbox'].includes(item.type)) {
-            this.$set(this.data, item.key, [])
+          if (['checkbox'].includes(item.el)) {
+            this.$set(this.data, item.field, [])
           }
         })
       },

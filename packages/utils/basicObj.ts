@@ -124,7 +124,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
       let basicConfig = {
         search: { label: '', field: '', el: 'input', placeholder: '', show: true },
         table: { label: '', prop: '', el: 'cell', width: 80 },
-        dialog: { label: '', field: '', el: 'text', show: true }
+        dialog: { label: '', field: '', el: 'input', show: true }
       }
       const listeners = ['click', 'change', 'input', 'focus', 'blur']
       const externalKeys = ['field', 'show', 'el', 'label', 'option']

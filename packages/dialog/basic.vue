@@ -1,105 +1,90 @@
 <script>
-export default {
-  name: 'basic-module',
-  props: {
-    config: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
-    result: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
-    dateTypeList: {
-      type: Array
-    },
-    allRead: Boolean
+const layouts = {
+  config: {
+    general: 'input,switch,cascader, date-picker, time-picker, input-number, slider, rate',
+    hasChild: 'select, radio-group'
   },
-  computed: {
-    type () {
-      return this.config.type
-    }
+  general(Tag) {
+    const { field, $on, $attr } = this.config
+    const extendItem = this.extendItem
+    const listeners = this.openListeners ? $on : null
+    return (
+      <Tag
+      v-model={ this.result[field] }
+      { ...{ attrs: { ...$attr, ...extendItem }} }
+      slot={ undefined }
+      { ...{ on: listeners } }
+      >
+        { $attr && $attr.slot && <template slot={ $attr.slot }>{this.$slots[$attr.slot][0]}</template> }
+      </Tag>
+    )
   },
-  render (h) {
-    const { key, $attr, $on } = this.config
-    const allRead = this.allRead
-    const result = this.result
-    const type = this.type
-    if (type === 'text') {
-      return (
-        <el-input
-          v-model={result[key]}
-          type={type}
-          disabled={$attr.disabled || allRead}
-          {...{ attrs: $attr } }
-          { ...{ on: $on } }
-        ></el-input>)
-    } else if (type === 'select') {
-      return (
-        <el-select
-          v-model={result[key]}
-          disabled={$attr.disabled || allRead}
-          {...{ attrs: $attr } }
-          { ...{ on: $on } }
-        >
-          {this.config.options.map((item, index) => {
-            return <el-option key={index} label={item.label} value={item.value}></el-option>
-          })}
-        </el-select>
-      )
-    } else if (type === 'radio') {
-      return (
-        <el-radio-group
-          v-model={result[key]}
-          disabled={$attr.disabled || allRead}
-          size={$attr.size || 'small'}
-          {...{ attrs: $attr } }
-          { ...{ on: $on } }
-        >
-          {this.config.options.map((item, index) => <el-radio label={item.value} key={index}>{item.label}</el-radio>
-          )}
-        </el-radio-group>
-      )
-    } else if (type === 'checkbox') {
-      return (
-        <el-checkbox-group
-          v-model={result[key]}
-          disabled={$attr.disabled || allRead}
-          size={$attr.size || 'small'}
-          {...{ attrs: $attr }}
-          {...{ on: $on }}
-        >
-          {this.config.options.map((item, index) => <el-checkbox label={item.value} key={index}>{item.label}</el-checkbox>)}
-        </el-checkbox-group>
-      )
-    } else if (type === 'switch') {
-      return (
-        <el-switch
-          v-model={result[key]}
-          disabled={$attr.disabled || allRead}
-          {...{ attrs: $attr }}
-          {...{ on: $on }}
-        >
-        </el-switch>
-      )
-    } else if (this.dateTypeList.includes(type)) {
-      return (
-        <el-col>
-          <el-date-picker
-            type={type}
-            v-model={result[key]}
-            disabled={$attr.disabled || allRead}
-            {...{ attrs: $attr }}
-            { ...{ on: $on } }
-            style="width: 100%;"></el-date-picker>
-        </el-col>
-      )
+  hasChild(Tag) {
+    const { field, $on, $attr, option, isBtn } = this.config
+    const extendItem = this.extendItem
+    const listeners = this.openListeners ? $on : null
+    const match = Tag.match(/(.+?)(-group)?$/)
+    let ChildTag = match[2] ? match[1] : 'el-option'
+    if (isBtn) {
+      ChildTag = `${ChildTag}-button`
     }
-    return null
+    return (
+      <Tag
+        v-model={ this.result[field] }
+        { ...{ attrs: { ...$attr, ...extendItem }} }
+        slot={ undefined }
+        { ...{ on: listeners } }
+      >
+        {option.map((item, i) => (
+          match[2]
+            ? <ChildTag key={i} label={item.value}>
+              {item.label}
+            </ChildTag>
+            : <ChildTag
+              key={i}
+              label={item.label}
+              value={item.value}
+            ></ChildTag>
+        ))}
+      </Tag>
+    )
   }
 }
+
+export default {
+  name: 'FormItem',
+  props: {
+    result: {
+      type: Object,
+      required: true
+    },
+    config: {
+      type: Object,
+      required: true
+    },
+    // 模块属性
+    extendItem: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    // 是否打开事件
+    openListeners: {
+      type: Boolean,
+      default: true
+    }
+  },
+  render() {
+    let type
+    for (const key in layouts.config) {
+      if (layouts.config[key].includes(this.config.el)) {
+        type = key
+        break
+      }
+    }
+    return layouts[type].call(this, `el-${this.config.el}`)
+  }
+}
+
 </script>
