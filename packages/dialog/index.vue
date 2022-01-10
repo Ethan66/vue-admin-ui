@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="title" ref="dialog" :visible.sync="showDialog1" :class="['dialogModule', { doubleColumn }]" :close-on-click-modal="false">
-    <el-form :model="data" :rules="rules" ref="form">
+    <el-form :label-position="align" :model="data" :rules="rules" ref="form">
       <el-row v-for="(item, i) in dialogItem" :key="i" :class="onClass(item.span, item.el)">
         <el-col :class="(item.$attr && item.$attr.clsName) || ''">
            <el-form-item
@@ -30,6 +30,7 @@
               <basic-module
                 :config="item"
                 :result="data"
+                :extendItem="everyDomAttr"
                 :all-read="allRead"
               >
               </basic-module>
@@ -44,7 +45,7 @@
                  v-if="item.show"
                  :type="item.color"
                  :disabled="item.disabled"
-                 @click="onFn(item.el, item.clickFn || '')">{{item.name}}</el-button>
+                 @click="onFn(item.type, item.clickFn || '')">{{item.name}}</el-button>
       </template>
     </div>
   </el-dialog>
@@ -75,6 +76,14 @@ export default {
         return {}
       }
     },
+    size: {
+      type: String,
+      default: 'small'
+    },
+    align: {
+      type: String,
+      default: 'right'
+    },
     doubleColumn: Boolean,
     showDialog: Boolean,
     btns: Array,
@@ -96,6 +105,9 @@ export default {
         this.dialogItem.forEach(item => {
           if (item.label.length > this.chineseTybe) {
             this.chineseTybe = item.label.length
+          }
+          if (item.el === 'date-picker' && !item.$attr['value-format']) {
+            item.$attr['value-format'] = 'yyyy-MM-dd'
           }
           if (['checkbox'].includes(item.el)) {
             this.$set(this.data, item.field, [])
@@ -129,6 +141,16 @@ export default {
         if (i === 5) break
       }
       return parent
+    },
+    everyDomAttr() {
+      const result = {};
+      const initVals = ['small', false];
+      ['size', 'allRead'].forEach((key, i) => {
+        if (this[key] !== initVals[i]) {
+          result[key === 'allRead' ? 'disabled' : key] = this[key]
+        }
+      })
+      return result
     }
   },
   methods: {

@@ -8,6 +8,8 @@
       :allRead="allRead"
       :title="dialogTitle"
       :showDialog.sync="showDialogForm"
+      size="mini"
+      align="left"
       :data="editData"
       :items="dialogItem"
       :btns="dialogBtn"
@@ -32,7 +34,7 @@ export default {
           position: { label: '职位', el: 'select', option: [{ label: '前端', value: '1' }, { label: '运营', value: '2' }] },
           roleId: { label: '角色', el: 'select', multiple: true, option: [{ label: '超级管理员', value: '1' }, { label: '管理员', value: '2' }, { label: '技术', value: '3' }] },
           position3: { label: '关联账号', el: 'checkbox', option: [{ label: '测试', value: '2' }, { label: '运营', value: '3' }] },
-          status: { label: '状态', el: 'radio', option: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] },
+          status: { label: '状态', el: 'radio-group', option: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] },
           date: { label: '日期', el: 'date-picker' },
           daterange: { label: '日期范围', el: 'date-picker', type: 'daterange', key: 'str1,str2' },
           week: { label: '周', el: 'date-picker', type: 'week', format: 'yyyy 第 WW 周' },
