@@ -26,6 +26,9 @@
           :btns="tableBtn"
         />
       </template>
+      <template slot="expand" slot-scope="scope">
+        <div>{{scope.row}}</div>
+      </template>
     </table-module>
   </div>
 </template>
@@ -43,7 +46,8 @@ export default {
       items: {
         table: {
           index: { type: 'index', label: '序号' },
-          selection: { selectable: (row, index) => index !== 2 },
+          selection: { type: 'selection', selectable: (row, index) => index !== 2 },
+          expand: { type: 'expand', slot: 'expand' },
           account: { label: '账号', width: 100, show: false },
           name: { label: '用户名' },
           roleName: { label: '角色', width: 100 },

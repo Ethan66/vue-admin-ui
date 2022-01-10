@@ -146,8 +146,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
               obj.type = 'btn'
               !obj.label && (obj.label = '操作')
               !obj.fixed && (obj.fixed = 'right')
-            } else if (key === 'selection') {
-              obj.type = 'selection'
+            } else if (['index', 'selection', 'expand'].includes(obj.type)) {
               obj.width = 50
             } else {
               obj.prop = key

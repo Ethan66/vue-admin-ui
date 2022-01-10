@@ -14,20 +14,50 @@
       v-on="$listeners"
     >
       <template v-for="(item, i) in tableItem">
-        <el-table-column
+        <!-- <el-table-column
           v-if="item.type === 'index'"
           :key="`index${i}`"
           align="center"
           type="index"
           v-bind="item"
-        />
+        /> -->
         <el-table-column
-          v-if="item.type==='selection'"
+          v-if="['index', 'selection'].includes(item.type)"
           :key="`selection${i}`"
           align="center"
           v-bind="item"
         />
-        <template v-if="item.type === 'cell'">
+        <el-table-column
+          v-else-if="item.type === 'expand'"
+          :key="`expand${i}`"
+          align="center"
+          :slot="undefined"
+          v-bind="item"
+        >
+          <template slot-scope="scope">
+            <slot
+              :name="item.slot"
+              :row="scope.row"
+              :$index="scope.$index"
+            ></slot>
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-else-if="item.type === 'btn'"
+          :key="`btn${i}`"
+          :width="item.width"
+          :slot="undefined"
+          v-bind="item"
+        >
+          <template slot-scope="scope">
+            <slot
+              name="btn"
+              :row="scope.row"
+              :$index="scope.$index"
+            ></slot>
+          </template>
+        </el-table-column>
+        <template v-else-if="item.el === 'cell'">
           <el-table-column
             v-if="!item.slot"
             :key="`content${i}`"
@@ -54,21 +84,6 @@
             </template>
           </el-table-column>
         </template>
-        <el-table-column
-          v-if="item.type === 'btn'"
-          :key="`btn${i}`"
-          :width="item.width"
-          :slot="undefined"
-          v-bind="item"
-        >
-          <template slot-scope="scope">
-            <slot
-              name="btn"
-              :row="scope.row"
-              :$index="scope.$index"
-            ></slot>
-          </template>
-        </el-table-column>
       </template>
     </el-table>
     <!-- 底部统计数据 -->
