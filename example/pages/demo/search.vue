@@ -4,6 +4,7 @@
       :items="searchItem"
       v-model="searchValues"
       :min="min"
+      size="mini"
       ref="search"
       :rules="{ max: [
             { required: true, message: '请选择活动区域', trigger: 'change' }
@@ -31,10 +32,12 @@ export default {
           disable: { label: '禁止输入', disabled: true },
           listen: { label: '监听改变', el: 'select', option: [], change: this.handleChange },
           'str1,str2': { label: '时间', el: 'date-picker', type: 'datetimerange', rangeSeparator: '至', startPlaceholder: '开始日期', endPlaceholder: '结束日期' },
-          date: { label: '时间', el: 'date-picker' },
+          date: { label: '日期', el: 'date-picker' },
           week: { label: '周', el: 'date-picker', type: 'week', format: 'yyyy 第 WW 周' },
           month: { label: '月', el: 'date-picker', type: 'month' },
-          year: { label: '年', el: 'date-picker', type: 'year' }
+          year: { label: '年', el: 'date-picker', type: 'year' },
+          cc: { el: 'time-picker', label: '时间', clearable: true },
+          bb: { el: 'cascader', label: '级联选择', options: [{ label: '选项1',  value: 1, children: [{ label: '选项1-1',  value: '1-1' }] }, { label: '选项2',  value: 2,  children: [{ label: '选项2-1',  value: '2-1' }] }],  filterable: true,  'collapse-tags': true }
         }
       }
     }), {

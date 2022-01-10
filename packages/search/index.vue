@@ -26,6 +26,7 @@
               <basic-module
                 :config="item"
                 :result="value"
+                :extendItem="everyDomAttr"
               ></basic-module>
             </el-form-item>
           </template>
@@ -47,6 +48,10 @@ export default {
     searchRef: {
       type: String,
       default: 'search'
+    },
+    size: {
+      type: String,
+      default: 'small'
     },
     items: {
       type: Array,
@@ -101,10 +106,25 @@ export default {
   computed: {
     newItems () {
       const tmp = this.items.filter(item => item.show !== false)
+      tmp.forEach(item => {
+        if (item.el === 'date-picker' && !item.$attr['value-format']) {
+          item.$attr['value-format'] = 'yyyy-MM-dd'
+        }
+      })
       if (Number(this.min) === 0) {
         return tmp
       }
       return tmp.slice(0, Number(this.min))
+    },
+    everyDomAttr() {
+      const result = {};
+      const initVals = ['small', false];
+      ['size', 'allRead'].forEach((key, i) => {
+        if (this[key] !== initVals[i]) {
+          result[key === 'allRead' ? 'disabled' : key] = this[key]
+        }
+      })
+      return result
     }
   },
   methods: {
