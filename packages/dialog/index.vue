@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="title" ref="dialog" :visible.sync="showDialog1" :class="['dialogModule', { doubleColumn }]" :close-on-click-modal="false">
     <el-form :label-position="align" :model="data" :rules="rules" ref="form">
-      <el-row v-for="(item, i) in dialogItem" :key="i" :class="onClass(item.span, item.el)">
+      <el-row v-for="(item, i) in dialogItem" :key="i" :class="onClass(item.$attr.span, item.el)">
         <el-col :class="(item.$attr && item.$attr.clsName) || ''">
            <el-form-item
             v-if="item.$attr.slot"

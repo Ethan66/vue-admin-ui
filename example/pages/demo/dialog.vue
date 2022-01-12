@@ -9,7 +9,7 @@
       :title="dialogTitle"
       :showDialog.sync="showDialogForm"
       size="mini"
-      align="left"
+      align="right"
       :data="editData"
       :items="dialogItem"
       :btns="dialogBtn"
@@ -31,8 +31,8 @@ export default {
           password: { label: '密码', disabled: true },
           delivery: { label: '开关', el: 'switch' },
           textarea: { label: '文本', slot: 'textarea' },
-          position: { label: '职位', el: 'select', option: [{ label: '前端', value: '1' }, { label: '运营', value: '2' }] },
-          roleId: { label: '角色', el: 'select', multiple: true, option: [{ label: '超级管理员', value: '1' }, { label: '管理员', value: '2' }, { label: '技术', value: '3' }] },
+          position: { label: '职位', el: 'select', option: [{ label: '前端', value: '1' }, { label: '运营', value: '2' }], span: 12 },
+          roleId: { label: '角色', el: 'select', multiple: true, option: [{ label: '超级管理员', value: '1' }, { label: '管理员', value: '2' }, { label: '技术', value: '3' }], span: 12 },
           position3: { label: '关联账号', el: 'checkbox', option: [{ label: '测试', value: '2' }, { label: '运营', value: '3' }] },
           status: { label: '状态', el: 'radio-group', option: [{ label: '允许登录', value: 1 }, { label: '禁止登录', value: 0 }] },
           date: { label: '日期', el: 'date-picker' },
