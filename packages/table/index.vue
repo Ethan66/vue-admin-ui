@@ -28,8 +28,12 @@
           v-bind="item"
         />
         <template v-if="item.type === 'cell'">
+          <template v-if="item.level">
+            <table-level :item="item" :key="`content${i}`">
+            </table-level>
+          </template>
           <el-table-column
-            v-if="!item.slot"
+            v-else-if="!item.slot"
             :key="`content${i}`"
             :min-width="item.width"
             :width="undefined"
@@ -94,7 +98,9 @@
 
 <script>
 import { getTableHeight } from './config/method'
+import TableLevel from './components/table-level.vue'
 export default {
+  components: { TableLevel },
   name: 'tableModule',
   props: {
     loading: Boolean,
