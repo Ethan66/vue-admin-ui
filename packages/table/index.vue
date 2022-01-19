@@ -98,7 +98,7 @@
 
 <script>
 import { getTableHeight } from './config/method'
-import TableLevel from './components/table-level.vue'
+import TableLevel from './components/table-level'
 export default {
   components: { TableLevel },
   name: 'tableModule',

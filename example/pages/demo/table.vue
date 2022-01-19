@@ -47,7 +47,7 @@ export default {
           account: { label: '账号', width: 100, show: false },
           name: { label: '用户名' },
           roleName: { label: '角色', width: 100 },
-          aa: { label: '综合', level: 3, children: [{ label: '最近登录', prop: 'loginTime' }, { label: '操作人', prop: 'operator', children: [{ label: '操作人1', prop: 'loginTime' }, { label: '操作人2', prop: 'operator' }] }] },
+          aa: { label: '综合', level: 3, children: [{ label: '最近登录', prop: 'loginTime' }, { label: '操作人', children: [{ label: '操作人1', prop: 'loginTime' }, { label: '操作人2', prop: 'operator' }] }] },
           status: { label: '状态', width: 90, slot: 'status', clsName: 'userStatus', formatter: this.$InitObj.prototype.formmater(['禁止登录', '允许登录']) },
           loginTime: { label: '最近登录', width: 120 },
           operator: { label: '操作人', width: 100 },
