@@ -36,7 +36,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
     tableItem: []
     tableLoading: boolean
     isEdit: number
-    tablePages: { total: number, current: number, pageSize: number }
+    tablePages: { total: number, current: number, pageSize: number, sizes: number[] }
     tablechooseArr: []
     
     editData: object
@@ -73,7 +73,7 @@ const onCreateBasicData = function (defDialogBtn?: { defaultDialogBtn: IdefaultD
       this[`${module}Item`] = []
       this[`${module}Loading`] = true
       this.isEdit = 0
-      this[`${module}Pages`] = { total: 0, current: 1, pageSize: 20 }
+      this[`${module}Pages`] = { total: 0, current: 1, pageSize: 20, sizes: [20, 40, 50, 100] }
       this[`${module}chooseArr`] = []
     }
     initDialog (module: string, dialogBtn: (string | { [key: number]: object })[] = ['cancel', 'confirm']) {
