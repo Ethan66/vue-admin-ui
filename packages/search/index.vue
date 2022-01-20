@@ -130,7 +130,6 @@ export default {
   methods: {
     // 对日期key是数组的进行初始化数据
     initValues (items, val) {
-      debugger
       let initVal = Object.assign({}, val, this.default)
       const keys = items.filter(item => item.show !== false).reduce((result, current) => {
         result.push(current.field)
