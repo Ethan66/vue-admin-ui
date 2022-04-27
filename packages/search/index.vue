@@ -113,7 +113,9 @@ export default {
       }, [])
       keys.forEach(key => {
         if (/\w+,\w+/.test(key)) {
-          initVal[key] = key.split(',').map(k => initVal[k] === undefined ? '' : initVal[k])
+          const item = items.find(item => item.key === key)
+          const init = item.$attr['value-format'] === 'timestamp' ? undefined : ''
+          initVal[key] = key.split(',').map(k => initVal[k] === undefined ? init : initVal[k])
         } else {
           initVal[key] === undefined && (initVal[key] = '')
         }
