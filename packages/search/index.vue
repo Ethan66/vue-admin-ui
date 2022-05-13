@@ -7,6 +7,7 @@
             v-if="item.$attr.slot"
             :label="item.label"
             :prop="item.key"
+            v-bind="item.$attr"
             :key="i"
           >
             <slot :name="item.$attr.slot"></slot>
@@ -16,6 +17,7 @@
               v-if="['input', 'select', ...dateTypeList].includes(item.type)"
               :label="item.label"
               :prop="item.key"
+              v-bind="item.$attr"
               :key="i"
             >
               <basic-module
