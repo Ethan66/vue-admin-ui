@@ -80,7 +80,7 @@
     >
       <el-pagination
         :current-page.sync="page.current"
-        :page-sizes="[20, 40, 50, 100]"
+        :page-sizes="page.sizes"
         :page-size="page.pageSize"
         :total="page.total"
         :layout="layout"
