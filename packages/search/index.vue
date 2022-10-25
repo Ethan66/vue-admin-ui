@@ -1,6 +1,5 @@
 <template>
   <div class="searchContent">
-    <slot name="header"></slot>
     <el-form :inline="true" :model="value" :rules="rules" size="small" :ref="searchRef">
         <template v-for="(item, i) in newItems">
           <el-form-item
@@ -32,6 +31,7 @@
         <el-button type="primary" icon="el-icon-search" @click.native.prevent="onSearch()" v-if="showQuery">查询</el-button>
         <el-button type="danger" icon="el-icon-delete" @click.native.prevent="onClear()" v-if="showReset">重置</el-button>
         <slot name="btn"></slot>
+        <el-button type="text" @click.native.prevent="isShowAll = !isShowAll" v-if="min">{{ isShowAll ? '收起': '更多搜索' }}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -85,7 +85,8 @@ export default {
   },
   data () {
     return {
-      dateTypeList: ['year', 'month', 'date', 'dates', 'week', 'datetime', 'datetimerange', 'daterange', 'monthrange'] // ele-date默认type类型
+      dateTypeList: ['year', 'month', 'date', 'dates', 'week', 'datetime', 'datetimerange', 'daterange', 'monthrange'], // ele-date默认type类型
+      isShowAll: false
     }
   },
   watch: {
@@ -102,7 +103,7 @@ export default {
       if (Number(this.min) === 0) {
         return tmp
       }
-      return tmp.slice(0, Number(this.min))
+      return this.isShowAll ? tmp : tmp.slice(0, Number(this.min))
     }
   },
   methods: {
