@@ -30,6 +30,7 @@ export default {
     if (type === 'input') {
       return (
         <el-input
+          class="pure-input"
           v-model={result[key]}
           {...{ attrs: $attr } }
           { ...{ on: $on } }

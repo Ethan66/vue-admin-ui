@@ -1,5 +1,5 @@
 <template>
-  <div class="searchContent">
+  <div class="searchContent" v-on:keyup.enter="onWrapSearch">
     <el-form :inline="true" :model="value" :rules="rules" size="small" :ref="searchRef">
         <template v-for="(item, i) in newItems">
           <el-form-item
@@ -142,6 +142,12 @@ export default {
         }
       })
       this.$emit('search', value)
+    },
+    onWrapSearch (e) {
+      const target = e.target
+      if (target.parentNode.classList.contains('pure-input')) {
+        this.onSearch()
+      }
     }
   },
   components: {
