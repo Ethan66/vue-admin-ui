@@ -91,7 +91,7 @@ export default {
           if (item.label.length > this.chineseTybe) {
             this.chineseTybe = item.label.length
           }
-          if (['checkbox'].includes(item.type)) {
+          if (['checkbox'].includes(item.type) && !this.data[item.key]) {
             this.$set(this.data, item.key, [])
           }
         })
@@ -117,7 +117,7 @@ export default {
     parent () {
       let parent = this.$parent
       let i = 0
-      while (parent.dialogItem !== this.items) {
+      while (parent.dialogItem !== this.items && parent.dialog1Item !== this.items && parent.dialog2Item !== this.items && parent.dialog3Item !== this.items) {
         parent = parent.$parent
         i++
         if (i === 5) break
