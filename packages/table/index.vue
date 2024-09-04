@@ -175,8 +175,8 @@ export default {
     },
     // 事件：每页几条
     onSizeChange (val) {
-      console.log(`每页 ${val} 条`)
       this.page.pageSize = val
+      this.page.current = 1
       this.onCurrentChange(this.page.current)
     },
     // 事件：page改变
